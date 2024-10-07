@@ -1,0 +1,46 @@
+﻿using System.Linq;
+using UnityEngine;
+using YizziCamModV2;
+using static GorillaNetworking.CosmeticsController;
+
+namespace CameraMod.Camera {
+    internal class HeadCosmeticsHider : FromCameraHider {
+        public static void setHeadCosmeticsEnabled(bool enable) {
+            var headItems = instance.currentWornSet.items.Where(
+                item =>
+                    item.itemCategory == CosmeticCategory.Face ||
+                    item.itemCategory == CosmeticCategory.Hat
+            );
+
+            foreach (var item in headItems) {
+                var registry = GorillaTagger.Instance.offlineVRRig.cosmeticsObjectRegistry;
+                var cosmeticInstance = registry.Cosmetic(item.displayName);
+
+                CosmeticSlots slotType;
+                if (item.itemCategory == CosmeticCategory.Face) {
+                    slotType = CosmeticSlots.Face;
+                } else if (item.itemCategory == CosmeticCategory.Hat) {
+                    slotType = CosmeticSlots.Hat;
+                } else {
+                    Debug.Log("Lol why is this here");
+                    continue;
+                }
+
+                if (enable)
+                    cosmeticInstance.EnableItem(slotType);
+                else
+                    cosmeticInstance.DisableItem(slotType);
+            }
+        }
+
+        public override void Hide() {
+            if (!CameraController.Instance.fpv) return;
+
+            setHeadCosmeticsEnabled(false);
+        }
+
+        public override void Show() {
+            setHeadCosmeticsEnabled(true);
+        }
+    }
+}

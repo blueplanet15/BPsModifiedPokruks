@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="afdd2fc9-ca2c-4b2f-b5c2-e7402fdd1cb3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/testplate/Camera/Patches/HarmonyPatcher.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/testplate/Camera/Patches/Plugin.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.StupidTemplate/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.StupidTemplate/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.StupidTemplate/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.StupidTemplate/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.StupidTemplate/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/StupidTemplate.sln" beforeDir="false" afterPath="$PROJECT_DIR$/CameraMod.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Camera/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/testplate/Camera/CameraController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Camera/CheatsHiderFromOtherCameras.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Camera/HeadCosmeticsHider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/testplate/Camera/HeadCosmeticsHider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/BoolRef.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/BuildPiecesBlacklist.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ButtonCollider.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ButtonInfo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ColorChanger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/CoroutinesHelper.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ExtGradient.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/GhostLabMods/GhostLabMods.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Guns/ActivateLoadMapTriggersGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Guns/MapLoadTriggersSelector.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Guns/SelectedMapLoaderTriggerTeleporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Guns/SelectorGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Guns/VRRigESPSelectorGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/HidersAutoTagger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/InfectionBlacklist/InfectionBlacklist.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/MusicBot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/PiecesMods.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/PlayerDatabases/PlayerDatabaseHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/PublicLobbyCreator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/IState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/RigKeyFrame.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/RigRecordPlayer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/RigRecorder.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/RigReplication.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/UsageExamples/AllRigs/AllRigsRecordManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReplayMod/UsageExamples/OwnRig/OwnRigRecordManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Reports/BlacklistsHandler.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Reports/Reporter.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/ReportsCollection.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/RigManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/RigRecord.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/RigSave.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/SecondLookSkeletonGrabMod.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/Soundboard/Soundpad.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/TaskUtils.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/TeleportPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Classes/TimedBehaviour.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/CustomGTZoneDefine/Assets/GTZoneDefineTriggers" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/CustomGTZoneDefine/GTZoneStayTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Menu/Buttons.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Menu/Main.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Menu/Saver.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Menu/Settings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Menu/UI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ChangedZoneNotifier.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/CosmeticSetsManager.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ESPs/BoneESP.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ESPs/HuntChainESP.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ESPs/InfectionESP.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ESPs/SimpleHuntESP.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ESPs/SphereESP.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/FittingRoomMod.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/Miscellaneous.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/PlayersLastGorillaTriggerBox/PlayersLastGorillaTriggerBox.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/PlayersLastGorillaTriggerBox/TriggerBoxListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/PunchMod.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/PunchModFixed.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/PunchModFixed2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/PunchModFixed3.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/Safety.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/Settings.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/Teleport.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/TeleportGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/CopyIDGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/CustomGTZoneGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/GTZoneGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/MasterTagGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/MasterTagGun2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/TickScheldulingGunListener.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/VRRigGun/ToPlayerTeleportGun.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Mods/ZoneDefCollidersShow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Notifications/Library.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Notifications/NotificationsAPI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Notifications/PlayerJoin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Notifications/PlayerLeave.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/CosmeticAllowedPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/CosmeticsLoaded.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/FixReplacementVoice.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/HarmonyPatcher.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/MenuStartPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/Miscellaneous.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/Notifications/ReportsNotifier.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/Notifications/TagNotifier.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/OculusMenuHandPositioningEmulator.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/Plugin.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/QuitboxVisibility.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/ResizerPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/RigPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/ScoreboardReportNotifier.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/ShaderFix.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/Patches/TutorialSkipPatch.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/PluginInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/testplate/PluginInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/testplate/StupidTemplate.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/testplate/CameraMod.csproj" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/ILViewer/f4ef9f6aaee24071bcb63f45a49b44a628dc00/c0/b29f469e/02000705.il" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1c7436c96cf343cf89f52e04aecff120280600/36/b4adfbc8/GorillaTagManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1c7436c96cf343cf89f52e04aecff120280600/3a/0d3582eb/VRRig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1c7436c96cf343cf89f52e04aecff120280600/41/a7fc8452/VRMap.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/1c7436c96cf343cf89f52e04aecff120280600/ac/6d2c60d7/GTZone.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/411b1c8336634b258603ed164914167a19a00/92/e31d8e49/LoadBalancingClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/411b1c8336634b258603ed164914167a19a00/d5/869a277f/LoadBalancingPeer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/540dee6234544426b86127bb56ea227539a00/03/5dfc689e/PhotonPeer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/540dee6234544426b86127bb56ea227539a00/1e/60af2716/EnetPeer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/540dee6234544426b86127bb56ea227539a00/73/91b62903/PeerBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/540dee6234544426b86127bb56ea227539a00/9a/e2227432/ICryptoProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/540dee6234544426b86127bb56ea227539a00/fb/680257a8/DiffieHellmanCryptoProvider.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6135b16ba4844bb48dd7ee30f834431327e600/12/674b70ad/CosmeticsController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6815678d88884b6fbee3a345a548281a2c4800/a9/0e97832a/NetworkView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6815678d88884b6fbee3a345a548281a2c4800/e8/da66f9f5/GorillaTagger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/abe5002fa0b4424886074fb9a56d225014ee18/a1/9d8d280b/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/afad1937cf0344a6a764dd56b732d0a51ba00/99/0caa545b/PhotonNetwork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/c038d28301e14f119cdfe591ee634067273c00/7c/7cfbe99a/GorillaServer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cd05dc69cb6a4210a43d838ef645687411418/b9/c37bc9f2/AudioSource.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dad4d86928754a95ae2463167babd2451ba00/10/00860eb4/PhotonView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/dad4d86928754a95ae2463167babd2451ba00/ba/c50e4aaf/PhotonNetwork.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e79d69f219f645fab4a4673aaf9fe77370b0/f0/72305430/SymmetricAlgorithm.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eba14860b89d470a986ed29f9a55c8882c6a00/3a/40d33799/GorillaTagger.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/eba14860b89d470a986ed29f9a55c8882c6a00/ce/a38a6204/VRRig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f2191457c0314479914de671733864f798c00/bf/d5614460/XRRig.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f4ef9f6aaee24071bcb63f45a49b44a628dc00/eb/d62fade6/PhotonNetworkController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c15066cba7e1aee7267eb657bbca765ca6d8f340102af480491539af2dffc/Rijndael.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/testplate/PluginInfo.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2iLd4QcsVVfP6soJpG5C1ZLwncg" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\Pokruk\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\Pokruk\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\Pokruk\\AppData\\Local\\Symbols\\src&quot;
+    ]
+  }
+}</component>
+  <component name="RunManager">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="projectPathOnTarget" />
+      <option name="selectedOptions">
+        <list />
+      </option>
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Pokruk\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="afdd2fc9-ca2c-4b2f-b5c2-e7402fdd1cb3" name="Changes" comment="" />
+      <created>1719273604177</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719273604177</updated>
+      <workItem from="1719273606137" duration="2482000" />
+      <workItem from="1719339145146" duration="813000" />
+      <workItem from="1721770917943" duration="5398000" />
+      <workItem from="1722288959855" duration="1043000" />
+      <workItem from="1722398104356" duration="2816000" />
+      <workItem from="1722402524506" duration="8840000" />
+      <workItem from="1722564217489" duration="10904000" />
+      <workItem from="1722615374927" duration="689000" />
+      <workItem from="1722823083631" duration="17171000" />
+      <workItem from="1722894349063" duration="3366000" />
+      <workItem from="1723063681902" duration="362000" />
+      <workItem from="1723156833961" duration="5767000" />
+      <workItem from="1723179977575" duration="1270000" />
+      <workItem from="1723207905744" duration="1000000" />
+      <workItem from="1723246370259" duration="10649000" />
+      <workItem from="1723365185064" duration="3778000" />
+      <workItem from="1723701121890" duration="14047000" />
+      <workItem from="1723929323886" duration="2140000" />
+      <workItem from="1723983068387" duration="16773000" />
+      <workItem from="1724069112546" duration="5968000" />
+      <workItem from="1724148464809" duration="1871000" />
+      <workItem from="1724152573093" duration="8713000" />
+      <workItem from="1724172449262" duration="3000000" />
+      <workItem from="1724185194037" duration="5127000" />
+      <workItem from="1724241006741" duration="2426000" />
+      <workItem from="1724251526181" duration="39000" />
+      <workItem from="1724438400192" duration="388000" />
+      <workItem from="1724438800707" duration="63000" />
+      <workItem from="1724439158293" duration="2045000" />
+      <workItem from="1724544138675" duration="118000" />
+      <workItem from="1724618639053" duration="1242000" />
+      <workItem from="1724893585329" duration="2240000" />
+      <workItem from="1724973581796" duration="855000" />
+      <workItem from="1725873645713" duration="731000" />
+      <workItem from="1726175328938" duration="656000" />
+      <workItem from="1726191925053" duration="641000" />
+      <workItem from="1726326606431" duration="624000" />
+      <workItem from="1727144520971" duration="720000" />
+      <workItem from="1727218830907" duration="640000" />
+      <workItem from="1727463225382" duration="3877000" />
+      <workItem from="1727480464962" duration="61000" />
+      <workItem from="1727840676231" duration="5142000" />
+      <workItem from="1727848406819" duration="2037000" />
+    </task>
+    <task id="LOCAL-00001" summary="Menu button change">
+      <option name="closed" value="true" />
+      <created>1723208058184</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1723208058184</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Changed infected function to work with the ambush gamemode too">
+      <option name="closed" value="true" />
+      <created>1723208130202</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1723208130202</updated>
+    </task>
+    <task id="LOCAL-00003" summary="personalisation of the gui, auto hide on game launch">
+      <option name="closed" value="true" />
+      <created>1723208219059</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1723208219059</updated>
+    </task>
+    <task id="LOCAL-00004" summary="clear unnecessary usings">
+      <option name="closed" value="true" />
+      <created>1723208339555</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1723208339555</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Disabling the pieces functionality for update">
+      <option name="closed" value="true" />
+      <created>1723208396616</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723208396616</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Disabled the sound on menu button tap">
+      <option name="closed" value="true" />
+      <created>1723208466945</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1723208466946</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Reports queue implementation (to not cause sus reports spikes), and preventing same person report per session">
+      <option name="closed" value="true" />
+      <created>1723787703061</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1723787703061</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Prevents anti-cheat report in single player case">
+      <option name="closed" value="true" />
+      <created>1723787750773</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1723787750773</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Notifications about players cosmetics: player has stick, or fingerpainter, or has not allowed cosmetic items on him (cosmetics mod)">
+      <option name="closed" value="true" />
+      <created>1723787832038</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1723787832038</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Refactored to reuse the renaming part in future antihider bot features">
+      <option name="closed" value="true" />
+      <created>1723787899728</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1723787899728</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Delaying swapping sets to the new cosmetics system initialization (probably have bugs)">
+      <option name="closed" value="true" />
+      <created>1723788084894</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1723788084894</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Buttons raw list to List &#10;Change refactor buttons layout&#10;Infection blacklist fix try&#10;Build pieces blacklist (build ban feature)&#10;Scoreboard report notification (works only for full-sized leaderboard like the forest one)&#10;Self resizer (not really sure that it's not bannable after build update passed)&#10;Different punch mods&#10;Crystal midi music support for playing for others calling the step event supports only from C4-C7 (just 4 octaves)&#10; Changed boneESP to sphereESP due to frame drops&#10; Infection blacklist auto removes player on players leave&#10; Unsuccess try to add  scaling feature for the menu (problem with the canvas scaling in unity)&#10; Moved swap sets and HeadCosmeticsHider adding to the new cosmetics system initialization&#10; GTZoneGun for players zones debug purpose&#10; Hiders autotagger name feature for the antihider bot&#10; Imports oprimization&#10; Notifications logs switching feature&#10; Public lobby creator (i guess bannable) GTZoneToTrigger commenting for fast fix new zones system">
+      <option name="closed" value="true" />
+      <created>1723790335706</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1723790335706</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Tutorial skip (antihider bot feature)">
+      <option name="closed" value="true" />
+      <created>1723790954973</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1723790954973</updated>
+    </task>
+    <task id="LOCAL-00014" summary="menu collider displacement fix return after unsuccessful menu scaling feature">
+      <option name="closed" value="true" />
+      <created>1723791116242</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1723791116242</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Teleport fix like from bark mod menu (iis stealed it too btw)">
+      <option name="closed" value="true" />
+      <created>1723791145745</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1723791145745</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Switch VRRigESPSelectorGun nickname notification">
+      <option name="closed" value="true" />
+      <created>1723791615575</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1723791615575</updated>
+    </task>
+    <task id="LOCAL-00017" summary="anticheat notifications disabling feature">
+      <option name="closed" value="true" />
+      <created>1723792839408</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1723792839409</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Custom gt zone system">
+      <option name="closed" value="true" />
+      <created>1724079297465</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1724079297465</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Fixed zone bug if you leave to another code">
+      <option name="closed" value="true" />
+      <created>1724149212500</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1724149212500</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fixed zone bug if you leave to another code">
+      <option name="closed" value="true" />
+      <created>1724149236661</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1724149236661</updated>
+    </task>
+    <task id="LOCAL-00021" summary="region change">
+      <option name="closed" value="true" />
+      <created>1724168306768</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1724168306768</updated>
+    </task>
+    <task id="LOCAL-00022" summary="hiders tagger duples fix">
+      <option name="closed" value="true" />
+      <created>1724974288262</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1724974288263</updated>
+    </task>
+    <task id="LOCAL-00023" summary="fix deps references">
+      <option name="closed" value="true" />
+      <created>1724974321915</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1724974321915</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="Menu button change" />
+    <MESSAGE value="Changed infected function to work with the ambush gamemode too" />
+    <MESSAGE value="personalisation of the gui, auto hide on game launch" />
+    <MESSAGE value="clear unnecessary usings" />
+    <MESSAGE value="Disabling the pieces functionality for update" />
+    <MESSAGE value="Disabled the sound on menu button tap" />
+    <MESSAGE value="Reports queue implementation (to not cause sus reports spikes), and preventing same person report per session" />
+    <MESSAGE value="Prevents anti-cheat report in single player case" />
+    <MESSAGE value="Notifications about players cosmetics: player has stick, or fingerpainter, or has not allowed cosmetic items on him (cosmetics mod)" />
+    <MESSAGE value="Refactored to reuse the renaming part in future antihider bot features" />
+    <MESSAGE value="Delaying swapping sets to the new cosmetics system initialization (probably have bugs)" />
+    <MESSAGE value="Buttons raw list to List &#10;Change refactor buttons layout&#10;Infection blacklist fix try&#10;Build pieces blacklist (build ban feature)&#10;Scoreboard report notification (works only for full-sized leaderboard like the forest one)&#10;Self resizer (not really sure that it's not bannable after build update passed)&#10;Different punch mods&#10;Crystal midi music support for playing for others calling the step event supports only from C4-C7 (just 4 octaves)&#10; Changed boneESP to sphereESP due to frame drops&#10; Infection blacklist auto removes player on players leave&#10; Unsuccess try to add  scaling feature for the menu (problem with the canvas scaling in unity)&#10; Moved swap sets and HeadCosmeticsHider adding to the new cosmetics system initialization&#10; GTZoneGun for players zones debug purpose&#10; Hiders autotagger name feature for the antihider bot&#10; Imports oprimization&#10; Notifications logs switching feature&#10; Public lobby creator (i guess bannable) GTZoneToTrigger commenting for fast fix new zones system" />
+    <MESSAGE value="Tutorial skip (antihider bot feature)" />
+    <MESSAGE value="menu collider displacement fix return after unsuccessful menu scaling feature" />
+    <MESSAGE value="Teleport fix like from bark mod menu (iis stealed it too btw)" />
+    <MESSAGE value="Switch VRRigESPSelectorGun nickname notification" />
+    <MESSAGE value="anticheat notifications disabling feature" />
+    <MESSAGE value="Custom gt zone system" />
+    <MESSAGE value="Fixed zone bug if you leave to another code" />
+    <MESSAGE value="region change" />
+    <MESSAGE value="hiders tagger duples fix" />
+    <MESSAGE value="fix deps references" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix deps references" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

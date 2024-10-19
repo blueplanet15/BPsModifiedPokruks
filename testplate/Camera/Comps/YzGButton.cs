@@ -31,19 +31,12 @@ namespace CameraMod.Camera.Comps {
                             Application.OpenURL("https://github.com/Yizzii/YizziCamModV2#controls");
                             controller.openedurl = true;
                         }
-
                         break;
                     case "SmoothingDownButton":
-                        controller.smoothing -= 0.01f;
-                        if (controller.smoothing < 0.01f) controller.smoothing = 0.11f;
-                        controller.SmoothText.text = controller.smoothing.ToString();
-                        controller.canbeused = true;
+                        CameraController.ChangeSmoothing(-0.01f);
                         break;
                     case "SmoothingUpButton":
-                        controller.smoothing += 0.01f;
-                        if (controller.smoothing > 0.11f) controller.smoothing = 0.01f;
-                        controller.SmoothText.text = controller.smoothing.ToString();
-                        controller.canbeused = true;
+                        CameraController.ChangeSmoothing(0.01f);
                         break;
                     case "TPVButton":
                         if (controller.TPVMode == CameraController.TPVModes.BACK) {
@@ -94,26 +87,10 @@ namespace CameraMod.Camera.Comps {
                         controller.MiscPage.SetActive(true);
                         break;
                     case "NearClipDown":
-                        controller.TabletCamera.nearClipPlane -= 0.01f;
-                        if (controller.TabletCamera.nearClipPlane < 0.01) {
-                            controller.TabletCamera.nearClipPlane = 1f;
-                            controller.ThirdPersonCamera.nearClipPlane = 1f;
-                        }
-
-                        controller.ThirdPersonCamera.nearClipPlane = controller.TabletCamera.nearClipPlane;
-                        controller.NearClipText.text = controller.TabletCamera.nearClipPlane.ToString();
-                        controller.canbeused = true;
+                        CameraController.ChangeNearClip(-0.01f);
                         break;
                     case "NearClipUp":
-                        controller.TabletCamera.nearClipPlane += 0.01f;
-                        if (controller.TabletCamera.nearClipPlane > 1.0) {
-                            controller.TabletCamera.nearClipPlane = 0.01f;
-                            controller.ThirdPersonCamera.nearClipPlane = 0.01f;
-                        }
-
-                        controller.ThirdPersonCamera.nearClipPlane = controller.TabletCamera.nearClipPlane;
-                        controller.NearClipText.text = controller.TabletCamera.nearClipPlane.ToString();
-                        controller.canbeused = true;
+                        CameraController.ChangeNearClip(0.01f);
                         break;
                     case "FPButton":
                         controller.fp = !controller.fp;

@@ -89,6 +89,40 @@ namespace CameraMod.Camera {
             if (UpdateMode == UpdateMode.LateUpdate) AnUpdate();
         }
 
+        public static void SetNearClip(float val) {
+            var tabletCam = Instance.TabletCamera;
+            tabletCam.nearClipPlane = val;
+            if (tabletCam.nearClipPlane < 0.01) {
+                tabletCam.nearClipPlane = 1f;
+                Instance.ThirdPersonCamera.nearClipPlane = 1f;
+            }
+            if (tabletCam.nearClipPlane > 1.0) {
+                tabletCam.nearClipPlane = 0.01f;
+                Instance.ThirdPersonCamera.nearClipPlane = 0.01f;
+            }
+
+            Instance.ThirdPersonCamera.nearClipPlane = Instance.TabletCamera.nearClipPlane;
+            Instance.NearClipText.text = Instance.TabletCamera.nearClipPlane.ToString();
+            Instance.canbeused = true;
+        }
+
+        public static void ChangeNearClip(float diff) {
+            SetNearClip(Instance.TabletCamera.nearClipPlane + diff);
+            PlayerPrefs.SetFloat("CameraNearClip", Instance.TabletCamera.nearClipPlane);
+        }
+
+        public static void SetSmoothing(float val) {
+            Instance.smoothing = val;
+            if (Instance.smoothing < 0.01f) Instance.smoothing = 0.11f;
+            if (Instance.smoothing > 0.11f) Instance.smoothing = 0.01f;
+            Instance.SmoothText.text = Instance.smoothing.ToString();
+            Instance.canbeused = true;
+        }
+        public static void ChangeSmoothing(float change) {
+            var controller = Instance;
+            SetSmoothing(controller.smoothing + change);
+            PlayerPrefs.SetFloat("CameraSmoothing", controller.smoothing);
+        }
         public static void ChangeFov(float difference) {
             var controller = Instance;
 
@@ -97,6 +131,7 @@ namespace CameraMod.Camera {
 
             var newFov = Mathf.Clamp(controller.TabletCamera.fieldOfView + difference, min, max);
             SetFov(newFov);
+            PlayerPrefs.SetInt("CameraFov", (int) newFov);
         }
 
         public static void SetFov(float fov) {
@@ -211,8 +246,14 @@ namespace CameraMod.Camera {
             TabletCamera.nearClipPlane = 0.1f;
             FakeWebCam.transform.Rotate(-180, 180, 0);
             init = true;
-            Debug.Log("FOV SET");
-            SetFov(100);
+            
+            var fov = PlayerPrefs.GetInt("CameraFov", 100);
+            SetFov(fov);
+            
+            var smoothing = PlayerPrefs.GetFloat("CameraSmoothing", 0.07f);
+            SetSmoothing(smoothing);
+            
+            
         }
 
         public void SetTabletVisibility(bool visible) {

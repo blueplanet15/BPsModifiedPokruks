@@ -66,14 +66,13 @@ namespace CameraMod.Camera.Comps {
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
                 Debug.LogError("FetchWatermarkDeleteUserids filed: " + request.error);
             } else {
-                Debug.Log(request.downloadHandler.text);
-                Debug.Log(PhotonNetwork.LocalPlayer.UserId);
                 var whitelistIds = request.downloadHandler.text.Split("\n");
 
                 while (PhotonNetwork.LocalPlayer.UserId == null) {
                     yield return new WaitForSeconds(1);
                 }
                 
+                Debug.Log(PhotonNetwork.LocalPlayer.UserId);
                 watermarkEnabled = !whitelistIds.Contains(PhotonNetwork.LocalPlayer.UserId);
             }
         }

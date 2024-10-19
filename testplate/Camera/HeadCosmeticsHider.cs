@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using UnityEngine;
-using YizziCamModV2;
 using static GorillaNetworking.CosmeticsController;
 
 namespace CameraMod.Camera {

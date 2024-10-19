@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace YizziCamModV2 {
+namespace CameraMod.Camera {
     internal abstract class FromOtherCamerasHider : MonoBehaviour {
-        public Camera cam;
+        public UnityEngine.Camera cam;
 
         public void Start() {
-            cam = GetComponent<Camera>();
+            cam = GetComponent<UnityEngine.Camera>();
         }
 
         public void OnEnable() {
@@ -23,19 +23,19 @@ namespace YizziCamModV2 {
             RenderPipelineManager.endFrameRendering -= onEndFrameRendering;
         }
 
-        private void onBeginFrameRendering(ScriptableRenderContext context, Camera[] cameras) {
+        private void onBeginFrameRendering(ScriptableRenderContext context, UnityEngine.Camera[] cameras) {
             Hide();
         }
 
-        private void onBeginCameraRendering(ScriptableRenderContext context, Camera camera) {
+        private void onBeginCameraRendering(ScriptableRenderContext context, UnityEngine.Camera camera) {
             if (cam == camera) Show();
         }
 
-        private void onEndCameraRendering(ScriptableRenderContext context, Camera camera) {
+        private void onEndCameraRendering(ScriptableRenderContext context, UnityEngine.Camera camera) {
             if (cam == camera) Hide();
         }
 
-        private void onEndFrameRendering(ScriptableRenderContext context, Camera[] cameras) {
+        private void onEndFrameRendering(ScriptableRenderContext context, UnityEngine.Camera[] cameras) {
             Show();
         }
 

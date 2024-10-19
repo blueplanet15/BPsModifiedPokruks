@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using CameraMod.Camera;
 using HarmonyLib;
 using PokrukMenu.Classes;
 using UnityEngine;
 using static PokrukMenu.Menu.Buttons;
 
-namespace YizziCamModV2.Patches {
+namespace CameraMod.Camera.Patches {
     [HarmonyPatch(typeof(GorillaTagger))]
     [HarmonyPatch("Start", MethodType.Normal)]
     internal class StartPatch {

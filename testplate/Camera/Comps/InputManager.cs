@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
-namespace YizziCamModV2.Comps {
+namespace CameraMod.Camera.Comps {
     public class InputManager : MonoBehaviour {
         public static InputManager instance;
         public bool LeftGrip;

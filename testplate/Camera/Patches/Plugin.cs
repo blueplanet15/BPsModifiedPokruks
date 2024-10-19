@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using BepInEx;
 
-namespace CameraMod.Patches {
+namespace CameraMod.Camera.Patches {
     [BepInDependency("org.pokruk.gorillatag.pokrukmenu")]
     [Description(PluginInfo.Description)]
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]

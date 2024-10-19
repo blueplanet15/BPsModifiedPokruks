@@ -1,6 +1,5 @@
 ﻿using GorillaLocomotion;
 using HarmonyLib;
-using YizziCamModV2;
 
 namespace CameraMod.Camera.Patches {
     [HarmonyPatch(typeof(Player), "LateUpdate")]

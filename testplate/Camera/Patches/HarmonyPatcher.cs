@@ -2,7 +2,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace CameraMod.Patches {
+namespace CameraMod.Camera.Patches {
     public class HarmonyPatcher : MonoBehaviour {
         public static Harmony instance;
         public static bool IsPatched { get; private set; }

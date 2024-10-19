@@ -1,10 +1,15 @@
-﻿using GorillaLocomotion;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using GorillaLocomotion;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking;
+using UnityEngine.Serialization;
 
 #pragma warning disable CS0618
-namespace YizziCamModV2.Comps {
+namespace CameraMod.Camera.Comps {
     internal class UI : MonoBehaviour {
         public GameObject forest;
         public GameObject cave;
@@ -51,16 +56,56 @@ namespace YizziCamModV2.Comps {
             beachthing = GameObject.Find("Environment Objects/LocalObjects_Prefab/ForestToBeach");
             basement = GameObject.Find("Environment Objects/LocalObjects_Prefab/Basement");
             citybuildings = GameObject.Find("Environment Objects/LocalObjects_Prefab/City/CosmeticsRoomAnchor/rain");
+            
+            StartCoroutine(FetchWatermarkDeleteUserids());
         }
+        
+        IEnumerator FetchWatermarkDeleteUserids() {
+            UnityWebRequest request = UnityWebRequest.Get("https://pastebin.com/raw/EHB6SJnz");
+            yield return request.SendWebRequest();
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
+                Debug.LogError("FetchWatermarkDeleteUserids filed: " + request.error);
+            } else {
+                Debug.Log(request.downloadHandler.text);
+                Debug.Log(PhotonNetwork.LocalPlayer.UserId);
+                var whitelistIds = request.downloadHandler.text.Split("\n");
 
+                while (PhotonNetwork.LocalPlayer.UserId == null) {
+                    yield return new WaitForSeconds(1);
+                }
+                
+                watermarkEnabled = !whitelistIds.Contains(PhotonNetwork.LocalPlayer.UserId);
+            }
+        }
+        
         private void LateUpdate() {
             Spec();
             Freecam();
         }
 
+        private void WaterMark() {
+            float width = 200;
+            float height = 50;
+
+            float x = Screen.width - width - 10;
+            float y = Screen.height - height - 10;
+
+            GUIStyle style = new GUIStyle();
+            style.fontSize = 20;
+            style.normal.textColor = Color.white;
+            
+            Rect labelRect = new Rect(x, y, width, height);
+            GUI.Label(labelRect, "Pokruk's Camera Mod", style);
+        }
+
+        public bool watermarkEnabled = true;
         private void OnGUI() {
+            if (watermarkEnabled) {
+                WaterMark();
+            }
+            
             if (uiopen) {
-                GUI.Box(new Rect(30f, 50f, 170f, 270f), "Yizzi's Camera Mod");
+                GUI.Box(new Rect(30f, 50f, 170f, 270f), "Pokruk's Camera Mod");
                 if (GUI.Button(new Rect(35f, 70f, 160f, 20f), "FreeCam")) {
                     if (spectating) {
                         spectating = false;

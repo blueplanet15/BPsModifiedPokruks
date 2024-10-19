@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 #pragma warning disable CS0618
-namespace YizziCamModV2.Comps {
+namespace CameraMod.Camera.Comps {
     internal class RightGrabTrigger : MonoBehaviour {
         private void Start() {
             gameObject.layer = 18;

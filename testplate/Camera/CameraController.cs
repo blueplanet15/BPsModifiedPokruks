@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
+using CameraMod.Camera.Comps;
 using Cinemachine;
 using GorillaLocomotion;
 using UnityEngine;
 using UnityEngine.UI;
-using YizziCamModV2.Comps;
+
 //using BepInEx;
 
 #pragma warning disable CS0618
-namespace YizziCamModV2 {
+namespace CameraMod.Camera {
     public enum UpdateMode {
         Patch,
         Update,
@@ -45,9 +46,9 @@ namespace YizziCamModV2 {
         public List<Material> ScreenMats = new List<Material>();
         public List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
-        public Camera TabletCamera;
-        public Camera FirstPersonCamera;
-        public Camera ThirdPersonCamera;
+        public UnityEngine.Camera TabletCamera;
+        public UnityEngine.Camera FirstPersonCamera;
+        public UnityEngine.Camera ThirdPersonCamera;
         public CinemachineVirtualCamera CMVirtualCamera;
 
         public Text FovText;
@@ -122,10 +123,10 @@ namespace YizziCamModV2 {
             CMVirtualCameraGO = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera/CM vcam1");
             TPVBodyFollower = GorillaTagger.Instance.bodyCollider.gameObject;
             CMVirtualCamera = CMVirtualCameraGO.GetComponent<CinemachineVirtualCamera>();
-            FirstPersonCamera = FirstPersonCameraGO.GetComponent<Camera>();
+            FirstPersonCamera = FirstPersonCameraGO.GetComponent<UnityEngine.Camera>();
 
 
-            ThirdPersonCamera = ThirdPersonCameraGO.GetComponent<Camera>();
+            ThirdPersonCamera = ThirdPersonCameraGO.GetComponent<UnityEngine.Camera>();
 
             LeftHandGO = GorillaTagger.Instance.leftHandTransform.gameObject;
             RightHandGO = GorillaTagger.Instance.rightHandTransform.gameObject;
@@ -136,7 +137,7 @@ namespace YizziCamModV2 {
 
 
             TabletCameraGO = GameObject.Find("CameraTablet(Clone)/Camera");
-            TabletCamera = TabletCameraGO.GetComponent<Camera>();
+            TabletCamera = TabletCameraGO.GetComponent<UnityEngine.Camera>();
 
             FakeWebCam = GameObject.Find("CameraTablet(Clone)/FakeCamera");
             LeftGrabCol = GameObject.Find("CameraTablet(Clone)/LeftGrabCol");
@@ -183,25 +184,25 @@ namespace YizziCamModV2 {
             ThirdPersonCameraGO.transform.position = TabletCamera.transform.position;
             ThirdPersonCameraGO.transform.rotation = TabletCamera.transform.rotation;
             CameraTablet.transform.Rotate(0, 180, 0);
-            
+
             ColorScreenText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/ColorScreenText")
                 .GetComponent<Text>();
-            
+
             ColorButtons.Add(GameObject.Find("ColorScreen(Clone)/Stuff/RedButton"));
             ColorButtons.Add(GameObject.Find("ColorScreen(Clone)/Stuff/GreenButton"));
             ColorButtons.Add(GameObject.Find("ColorScreen(Clone)/Stuff/BlueButton"));
-            
+
             foreach (var btns in ColorButtons) btns.AddComponent<YzGButton>();
-            
+
             ScreenMats.Add(GameObject.Find("ColorScreen(Clone)/Screen1").GetComponent<MeshRenderer>().material);
             ScreenMats.Add(GameObject.Find("ColorScreen(Clone)/Screen2").GetComponent<MeshRenderer>().material);
             ScreenMats.Add(GameObject.Find("ColorScreen(Clone)/Screen3").GetComponent<MeshRenderer>().material);
-            
+
             meshRenderers.Add(GameObject.Find("CameraTablet(Clone)/FakeCamera").GetComponent<MeshRenderer>());
             meshRenderers.Add(GameObject.Find("CameraTablet(Clone)/Tablet").GetComponent<MeshRenderer>());
             meshRenderers.Add(GameObject.Find("CameraTablet(Clone)/Handle").GetComponent<MeshRenderer>());
             meshRenderers.Add(GameObject.Find("CameraTablet(Clone)/Handle2").GetComponent<MeshRenderer>());
-            
+
             ColorScreenGO.transform.position = new Vector3(-54.3f, 16.21f, -122.96f);
             ColorScreenGO.transform.Rotate(0, 30, 0);
             ColorScreenGO.SetActive(false);
@@ -217,7 +218,7 @@ namespace YizziCamModV2 {
         public void SetTabletVisibility(bool visible) {
             foreach (var mr in meshRenderers) mr.enabled = visible;
         }
-        
+
         public void AnUpdate() {
             if (!init) return;
 

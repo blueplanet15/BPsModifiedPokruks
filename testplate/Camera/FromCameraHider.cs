@@ -2,7 +2,7 @@
 using UnityEngine.Rendering;
 
 namespace CameraMod.Camera {
-    internal abstract class FromCameraHider : MonoBehaviour {
+    public abstract class FromCameraHider : MonoBehaviour {
         public UnityEngine.Camera cam;
 
         public void Start() {

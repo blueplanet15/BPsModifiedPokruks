@@ -3,7 +3,7 @@ using UnityEngine;
 using static GorillaNetworking.CosmeticsController;
 
 namespace CameraMod.Camera {
-    internal class HeadCosmeticsHider : FromCameraHider {
+    public class HeadCosmeticsHider : FromCameraHider {
         public static void setHeadCosmeticsEnabled(bool enable) {
             var headItems = instance.currentWornSet.items.Where(
                 item =>

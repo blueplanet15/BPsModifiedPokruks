@@ -3,7 +3,6 @@ using System.ComponentModel;
 using BepInEx;
 
 namespace CameraMod.Camera.Patches {
-    [BepInDependency("org.pokruk.gorillatag.pokrukmenu")]
     [Description(PluginInfo.Description)]
     [BepInPlugin(PluginInfo.GUID, PluginInfo.Name, PluginInfo.Version)]
     public class HarmonyPatches : BaseUnityPlugin {

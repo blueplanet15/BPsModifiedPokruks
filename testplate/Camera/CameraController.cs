@@ -146,6 +146,24 @@ namespace CameraMod.Camera {
             controller.canbeused = true;
         }
 
+        public HashSet<string> bindAliases = new HashSet<string>();
+
+        public bool BindPressed() {
+            var inputManager = InputManager.instance;
+            foreach (var bindAlias in bindAliases) {
+                if (bindAlias == "RP" && inputManager.RightPrimaryButton)
+                    return true;
+                if (bindAlias == "LP" && inputManager.LeftPrimaryButton)
+                    return true;
+                if (bindAlias == "RS" && inputManager.RightSecondaryButton)
+                    return true;
+                if (bindAlias == "LS" && inputManager.LeftSecondaryButton)
+                    return true;
+            }
+
+            return false;
+        } 
+        
         public void YizziStart() {
             gameObject.AddComponent<InputManager>().gameObject.AddComponent<UI>();
             var assetsPath = Assembly.GetExecutingAssembly().GetName().Name + ".Camera.Assets";
@@ -252,8 +270,16 @@ namespace CameraMod.Camera {
             
             var smoothing = PlayerPrefs.GetFloat("CameraSmoothing", 0.07f);
             SetSmoothing(smoothing);
-            
-            
+
+            foreach (var bindAlias in Configs.controls.CurrentSettings.activateBind.Split(" ")) {
+                bindAliases.Add(bindAlias);
+            }
+            Configs.controls.Changed += (cfg) => {
+                bindAliases.Clear();
+                foreach (var bindAlias in cfg.activateBind.Split(" ")) {
+                    bindAliases.Add(bindAlias);
+                }
+            };
         }
 
         public void SetTabletVisibility(bool visible) {
@@ -274,7 +300,7 @@ namespace CameraMod.Camera {
                     CameraFollower.transform.rotation, smoothing);
             }
 
-            if (bindEnabled && InputManager.instance.RightPrimaryButton && CameraTablet.transform.parent == null) {
+            if (bindEnabled && BindPressed() && CameraTablet.transform.parent == null) {
                 fp = false;
                 fpv = false;
                 tpv = false;
@@ -331,7 +357,7 @@ namespace CameraMod.Camera {
                                                   CameraFollower.transform.position);
                 }
 
-                if (InputManager.instance.RightPrimaryButton) {
+                if (BindPressed()) {
                     var headT = Player.Instance.headCollider.transform;
                     
                     CameraTablet.transform.position = headT.position + headT.forward;

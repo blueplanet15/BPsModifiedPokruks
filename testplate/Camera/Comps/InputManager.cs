@@ -8,9 +8,12 @@ namespace CameraMod.Camera.Comps {
         public bool LeftGrip;
         public bool RightGrip;
         public bool RightPrimaryButton; // x
-
         public bool LeftPrimaryButton;
 
+        public bool LeftSecondaryButton;
+        public bool RightSecondaryButton;
+        
+        
         // gamepad
         public Vector2 GPLeftStick;
         public Vector2 GPRightStick;
@@ -22,10 +25,14 @@ namespace CameraMod.Camera.Comps {
         }
 
         private void Update() {
-            LeftGrip = ControllerInputPoller.instance.leftGrab;
-            RightGrip = ControllerInputPoller.instance.rightGrab;
-            RightPrimaryButton = ControllerInputPoller.instance.rightControllerPrimaryButton;
-            LeftPrimaryButton = ControllerInputPoller.instance.leftControllerPrimaryButton;
+            var poller = ControllerInputPoller.instance;
+            LeftGrip = poller.leftGrab;
+            RightGrip = poller.rightGrab;
+            RightPrimaryButton = poller.rightControllerPrimaryButton;
+            LeftPrimaryButton = poller.leftControllerPrimaryButton;
+
+            LeftSecondaryButton = poller.leftControllerSecondaryButton;
+            RightSecondaryButton = poller.rightControllerSecondaryButton;
 
             if (Gamepad.current != null) {
                 GPLeftStick = Gamepad.current.leftStick.ReadValue();

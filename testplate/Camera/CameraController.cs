@@ -281,13 +281,14 @@ namespace CameraMod.Camera {
                 if (!MainPage.active) {
                     foreach (var btns in Buttons) btns.SetActive(true);
                     SetTabletVisibility(true);
-                    CameraTablet.transform.Rotate(0f, -180f, 0f);
 
                     MainPage.active = true;
                 }
 
                 var headTransform = Player.Instance.headCollider.transform;
                 CameraTablet.transform.position = headTransform.position + headTransform.forward;
+                CameraTablet.transform.LookAt(headTransform.position);
+                CameraTablet.transform.Rotate(0f, -180f, 0f);
             }
 
             if (fp) {
@@ -331,8 +332,12 @@ namespace CameraMod.Camera {
                 }
 
                 if (InputManager.instance.RightPrimaryButton) {
-                    CameraTablet.transform.position = Player.Instance.headCollider.transform.position +
-                                                      Player.Instance.headCollider.transform.forward;
+                    var headT = Player.Instance.headCollider.transform;
+                    
+                    CameraTablet.transform.position = headT.position + headT.forward;
+                    CameraTablet.transform.LookAt(headT.position);
+                    CameraTablet.transform.Rotate(0f, -180f, 0f);
+                    
                     SetTabletVisibility(true);
                     CameraTablet.transform.parent = null;
                     tpv = false;

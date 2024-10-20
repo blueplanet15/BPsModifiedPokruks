@@ -14,7 +14,7 @@
 
 ### How to Set Camera Activation Bind
 1. Start the game with the mod running at least once.
-2. Open the `Controls.json` config.
+2. Open the `YourGameRootFolder/CameraMod/Configs/Controls.json` config.
 3. Set the `activateBind` to the aliases of the buttons you want:
 
 | Alias | Generic meaning | Quest 2 controllers meaning |

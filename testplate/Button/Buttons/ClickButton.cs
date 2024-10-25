@@ -9,7 +9,7 @@ namespace CameraMod.Button.Buttons {
         public float clickMinInterval = 0.1f;
         
         private void OnTriggerEnter(Collider col) {
-            if (CameraController.Instance.buttonsTimeouted) return;
+            if (CameraController.Instance.ButtonsTimeouted) return;
             
             if (isHand(col)) {
                 return;

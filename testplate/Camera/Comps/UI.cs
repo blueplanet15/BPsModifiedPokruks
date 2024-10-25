@@ -40,7 +40,7 @@ namespace CameraMod.Camera.Comps {
         private bool specui;
         private bool uiopen;
         private Vector3 velocity = Vector3.zero;
-        private Transform tabletTransform => CameraController.Instance.CameraTablet.transform;
+        private Transform tabletTransform => CameraController.Instance.cameraTablet.transform;
 
         private void Start() {
             rigcache = GameObject.Find("Player Objects/RigCache/Rig Parent");
@@ -117,9 +117,9 @@ namespace CameraMod.Camera.Comps {
                     }
                     if (!CameraController.Instance.isFaceCamera) {
                         CameraController.Instance.isFaceCamera = true;
-                        CameraController.Instance.ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                        CameraController.Instance.TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                        CameraController.Instance.FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                        CameraController.Instance.thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
+                        CameraController.Instance.tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
+                        CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
                     }
 
                     CameraController.Instance.fpv = false;
@@ -173,9 +173,9 @@ namespace CameraMod.Camera.Comps {
                                 CameraController.Instance.tpv = false;
                                 if (CameraController.Instance.isFaceCamera) {
                                     CameraController.Instance.isFaceCamera = false;
-                                    CameraController.Instance.ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                                    CameraController.Instance.TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                                    CameraController.Instance.FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                                    CameraController.Instance.thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
+                                    CameraController.Instance.tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
+                                    CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
                                 }
                             }
                         }

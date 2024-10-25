@@ -1,4 +1,5 @@
 ﻿using System;
+using CameraMod.Camera;
 using CameraMod.Camera.Comps;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ namespace CameraMod.Button.Buttons {
         public bool isHolding => collidersCount > 0 && (Time.time - entered) > enterExitTapMaxDelay;
         private int collidersCount = 0;
         private void OnTriggerEnter(Collider col) {
+            if (CameraController.Instance.buttonsTimeouted) return;
+            
             if (isHand(col)) {
                 return;
             }
@@ -23,6 +26,8 @@ namespace CameraMod.Button.Buttons {
         }
 
         private void OnTriggerStay(Collider col) {
+            if (CameraController.Instance.buttonsTimeouted) return;
+            
             if (isHand(col)) return;
 
             if (isHolding && (Time.time - lastHoldTick) >  holdTickInterval) {
@@ -33,6 +38,8 @@ namespace CameraMod.Button.Buttons {
         }
 
         private void OnTriggerExit(Collider col) {
+            if (CameraController.Instance.buttonsTimeouted) return;
+            
             if (isHand(col)) {
                 return;
             }

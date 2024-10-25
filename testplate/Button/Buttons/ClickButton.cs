@@ -1,4 +1,5 @@
 ﻿using System;
+using CameraMod.Camera;
 using CameraMod.Camera.Comps;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ namespace CameraMod.Button.Buttons {
         public float clickMinInterval = 0.1f;
         
         private void OnTriggerEnter(Collider col) {
+            if (CameraController.Instance.buttonsTimeouted) return;
+            
             if (isHand(col)) {
                 return;
             }

@@ -274,11 +274,21 @@ namespace CameraMod.Camera {
             TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
             FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
         }
+
+        private float lastPageChangedTime;
+        private float pageChangeButtonsTimeout = 0.2f;
+        public bool buttonsTimeouted => Time.time - lastPageChangedTime < pageChangeButtonsTimeout;
         
         public void RegisterButtons() {
             AddTabletButton("MainPage/MiscButton", () => {
                 MainPage.SetActive(false);
                 MiscPage.SetActive(true);
+                lastPageChangedTime = Time.time;
+            });
+            AddTabletButton("MiscPage/BackButton", () => {
+                MainPage.SetActive(true);
+                MiscPage.SetActive(false);
+                lastPageChangedTime = Time.time;
             });
             
             AddTabletButton("MainPage/FPVButton", () => {
@@ -290,8 +300,8 @@ namespace CameraMod.Camera {
                 fpv = true;
             });
             
-            AddHoldableButton("MainPage/SmoothingDownButton", () => ChangeSmoothing(-0.01f));
-            AddHoldableButton("MainPage/SmoothingUpButton", () => ChangeSmoothing(0.01f));
+            AddHoldableTabletButton("MainPage/SmoothingDownButton", () => ChangeSmoothing(-0.01f));
+            AddHoldableTabletButton("MainPage/SmoothingUpButton", () => ChangeSmoothing(0.01f));
             
             AddTabletButton("MainPage/FovUP", () => ChangeFov(5));
             AddTabletButton("MainPage/FovDown", () => ChangeFov(-5));
@@ -310,10 +320,6 @@ namespace CameraMod.Camera {
                     Application.OpenURL("https://github.com/Yizzii/YizziCamModV2#controls");
                     openedurl = true;
                 }
-            });
-            AddTabletButton("MiscPage/BackButton", () => {
-                MainPage.SetActive(true);
-                MiscPage.SetActive(false);
             });
             AddTabletButton("MainPage/TPVButton", () => {
                 if (TPVMode == TPVModes.BACK) {
@@ -389,10 +395,11 @@ namespace CameraMod.Camera {
             button.OnClick(onClick);
             return button;
         }
+
         public void AddTabletButton(string relativeButtonPath, Action onClick) {
             Buttons.Add(Button("CameraTablet(Clone)/" + relativeButtonPath, onClick));
         }
-        public void AddHoldableButton(string buttonPath, Action onClick) {
+        public void AddHoldableTabletButton(string buttonPath, Action onClick) {
             Buttons.Add(
                 GameObject.Find("CameraTablet(Clone)/"+buttonPath)
                     .AddComponent<HoldableButton>()

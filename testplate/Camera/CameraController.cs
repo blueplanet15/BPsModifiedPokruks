@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using CameraMod.Camera.Comps;
 using Cinemachine;
@@ -41,7 +42,7 @@ namespace CameraMod.Camera {
         public GameObject CameraFollower;
         public GameObject TPVBodyFollower;
         public GameObject ColorScreenGO;
-        public List<GameObject> Buttons = new List<GameObject>();
+        private List<YzGButton> Buttons = new List<YzGButton>();
         public List<GameObject> ColorButtons = new List<GameObject>();
         public List<Material> ScreenMats = new List<Material>();
         public List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
@@ -61,7 +62,6 @@ namespace CameraMod.Camera {
         public Text TPRotText;
 
         public bool followheadrot = true;
-        public bool canbeused;
         public bool flipped;
         public bool tpv;
         public bool fpv = true;
@@ -103,7 +103,6 @@ namespace CameraMod.Camera {
 
             Instance.ThirdPersonCamera.nearClipPlane = Instance.TabletCamera.nearClipPlane;
             Instance.NearClipText.text = Instance.TabletCamera.nearClipPlane.ToString();
-            Instance.canbeused = true;
         }
 
         public static void ChangeNearClip(float diff) {
@@ -111,12 +110,13 @@ namespace CameraMod.Camera {
             PlayerPrefs.SetFloat("CameraNearClip", Instance.TabletCamera.nearClipPlane);
         }
 
+        private static float minSmoothing = 0.01f;
+        private static float maxSmoothing = 1f;
         public static void SetSmoothing(float val) {
             Instance.smoothing = val;
-            if (Instance.smoothing < 0.01f) Instance.smoothing = 0.11f;
-            if (Instance.smoothing > 0.11f) Instance.smoothing = 0.01f;
+            if (Instance.smoothing < minSmoothing) Instance.smoothing = minSmoothing;
+            if (Instance.smoothing > maxSmoothing) Instance.smoothing = maxSmoothing;
             Instance.SmoothText.text = Instance.smoothing.ToString();
-            Instance.canbeused = true;
         }
         public static void ChangeSmoothing(float change) {
             var controller = Instance;
@@ -143,7 +143,6 @@ namespace CameraMod.Camera {
 
             controller.ThirdPersonCamera.fieldOfView = controller.TabletCamera.fieldOfView;
             controller.FovText.text = controller.TabletCamera.fieldOfView.ToString();
-            controller.canbeused = true;
         }
 
         public HashSet<string> bindAliases = new HashSet<string>();
@@ -207,30 +206,48 @@ namespace CameraMod.Camera {
             SpeedText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/SpeedValueText").GetComponent<Text>();
             TPText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/TPText").GetComponent<Text>();
             TPRotText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/TPRotText").GetComponent<Text>();
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/MiscButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/FPVButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/FovUP"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/FovDown"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/FlipCamButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/NearClipUp"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/NearClipDown"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/FPButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/ControlsButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/TPVButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/SmoothingDownButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MainPage/SmoothingUpButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/BackButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/GreenScreenButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/MinDistDownButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/MinDistUpButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/SpeedDownButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/SpeedUpButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/SpeedDownButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/TPModeDownButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/TPModeUpButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/TPRotButton"));
-            Buttons.Add(GameObject.Find("CameraTablet(Clone)/MiscPage/TPRotButton1"));
-            foreach (var btns in Buttons) btns.AddComponent<YzGButton>();
+
+            Buttons = new List<GameObject>() {
+                GameObject.Find("CameraTablet(Clone)/MainPage/MiscButton"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/FPVButton"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/FovUP"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/FovDown"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/FlipCamButton"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/NearClipUp"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/NearClipDown"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/FPButton"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/ControlsButton"),
+                GameObject.Find("CameraTablet(Clone)/MainPage/TPVButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/BackButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/GreenScreenButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/MinDistDownButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/MinDistUpButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/SpeedDownButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/SpeedUpButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/SpeedDownButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/TPModeDownButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/TPModeUpButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/TPRotButton"),
+                GameObject.Find("CameraTablet(Clone)/MiscPage/TPRotButton1"),
+            }.Select(go=>go.AddComponent<YzGButton>()).ToList();
+            
+            Buttons.Add(
+                GameObject.Find("CameraTablet(Clone)/MainPage/SmoothingDownButton")
+                .AddComponent<YzGButton>()
+                .MakeHoldable()
+                .OnClick(() => {
+                    ChangeSmoothing(-0.01f);
+                })
+            );
+            Buttons.Add(
+                GameObject.Find("CameraTablet(Clone)/MainPage/SmoothingUpButton")
+                    .AddComponent<YzGButton>()
+                    .MakeHoldable()
+                    .OnClick(() => {
+                        ChangeSmoothing(0.01f);
+                    })
+            );
+            
             CMVirtualCamera.enabled = false;
             ThirdPersonCameraGO.transform.SetParent(CameraTablet.transform, true);
             CameraTablet.transform.position = new Vector3(-65, 12, -82);
@@ -305,7 +322,7 @@ namespace CameraMod.Camera {
                 fpv = false;
                 tpv = false;
                 if (!MainPage.active) {
-                    foreach (var btns in Buttons) btns.SetActive(true);
+                    foreach (var btns in Buttons) btns.gameObject.SetActive(true);
                     SetTabletVisibility(true);
 
                     MainPage.active = true;

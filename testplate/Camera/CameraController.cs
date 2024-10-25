@@ -6,6 +6,7 @@ using CameraMod.Camera.Comps;
 using Cinemachine;
 using GorillaLocomotion;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 //using BepInEx;
@@ -32,8 +33,6 @@ namespace CameraMod.Camera {
         public GameObject FirstPersonCameraGO;
         public GameObject ThirdPersonCameraGO;
         public GameObject CMVirtualCameraGO;
-        public GameObject LeftHandGO;
-        public GameObject RightHandGO;
         public GameObject FakeWebCam;
         public GameObject TabletCameraGO;
         public GameObject MainPage;
@@ -63,7 +62,7 @@ namespace CameraMod.Camera {
         public Text TPRotText;
 
         public bool followheadrot = true;
-        public bool flipped;
+        [FormerlySerializedAs("isFrontCamera")] [FormerlySerializedAs("flipped")] public bool isFaceCamera;
         public bool tpv;
         public bool fpv = true;
         public bool fp;
@@ -103,7 +102,7 @@ namespace CameraMod.Camera {
             }
 
             ThirdPersonCamera.nearClipPlane = TabletCamera.nearClipPlane;
-            NearClipText.text = TabletCamera.nearClipPlane.ToString();
+            NearClipText.text = TabletCamera.nearClipPlane.ToString("#.##");
         }
 
         public void ChangeNearClip(float diff) {
@@ -117,7 +116,7 @@ namespace CameraMod.Camera {
             smoothing = val;
             if (smoothing < minSmoothing) smoothing = minSmoothing;
             if (smoothing > maxSmoothing) smoothing = maxSmoothing;
-            SmoothText.text = smoothing.ToString();
+            SmoothText.text = smoothing.ToString("#.##");
         }
         public void ChangeSmoothing(float change) {
             SetSmoothing(smoothing + change);
@@ -140,7 +139,7 @@ namespace CameraMod.Camera {
             ThirdPersonCamera.fieldOfView = newFov;
 
             ThirdPersonCamera.fieldOfView = TabletCamera.fieldOfView;
-            FovText.text = TabletCamera.fieldOfView.ToString();
+            FovText.text = TabletCamera.fieldOfView.ToString("#.##");
         }
 
         public HashSet<string> bindAliases = new HashSet<string>();
@@ -180,8 +179,6 @@ namespace CameraMod.Camera {
 
             ThirdPersonCamera = ThirdPersonCameraGO.GetComponent<UnityEngine.Camera>();
 
-            LeftHandGO = tagger.leftHandTransform.gameObject;
-            RightHandGO = tagger.rightHandTransform.gameObject;
             CameraTablet.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             CameraFollower =
                 GameObject.Find(
@@ -259,79 +256,62 @@ namespace CameraMod.Camera {
                 }
             };
         }
-
+        
+        public void Flip() {
+            isFaceCamera = !isFaceCamera;
+            ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
+            TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
+            FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+        }
+        
         public void RegisterButtons() {
-            AddButton("MiscButton", () => {
+            AddButton("MainPage/MiscButton", () => {
                 MainPage.SetActive(false);
                 MiscPage.SetActive(true);
             });
             
-            AddButton("FPVButton", () => {
-                if (flipped) {
-                    flipped = false;
-                    ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                    TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                    FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+            AddButton("MainPage/FPVButton", () => {
+                if (isFaceCamera) {
+                    Flip();
                 }
 
                 fp = false;
                 fpv = true;
             });
             
-            AddHoldableButton("SmoothingDownButton", () => {
-                ChangeSmoothing(-0.01f);
-            });
-            AddHoldableButton("SmoothingUpButton", () => {
-                ChangeSmoothing(0.01f);
-            });
-            AddButton("FovUP", () => {
-                ChangeFov(5);
-            });
-            AddButton("FovDown", () => {
-                ChangeFov(-5);
-            });
-            AddButton("NearClipUp", () => {
-                ChangeNearClip(0.01f);
-            });
-            AddButton("NearClipDown", () => {
-                ChangeNearClip(-0.01f);
+            AddHoldableButton("MainPage/SmoothingDownButton", () => ChangeSmoothing(-0.01f));
+            AddHoldableButton("MainPage/SmoothingUpButton", () => ChangeSmoothing(0.01f));
+            
+            AddButton("MainPage/FovUP", () => ChangeFov(5));
+            AddButton("MainPage/FovDown", () => ChangeFov(-5));
+            
+            AddButton("MainPage/NearClipUp", () => ChangeNearClip(0.01f));
+            AddButton("MainPage/NearClipDown", () => ChangeNearClip(-0.01f));
+            
+            AddButton("MainPage/FlipCamButton", () => {
+                Flip();
             });
             
-            AddButton("FlipCamButton", () => {
-                flipped = !flipped;
-                ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
-            });
+            AddButton("MainPage/FPButton", () => fp = !fp);
             
-            AddButton("FPButton", () => {
-                fp = !fp;
-            });
-            
-            AddButton("ControlsButton", () => {
+            AddButton("MainPage/ControlsButton", () => {
                 if (!openedurl) {
                     Application.OpenURL("https://github.com/Yizzii/YizziCamModV2#controls");
                     openedurl = true;
                 }
             });
-            AddButton("BackButton", () => {
+            AddButton("MiscPage/BackButton", () => {
                 MainPage.SetActive(true);
                 MiscPage.SetActive(false);
             });
-            AddButton("TPVButton", () => {
+            AddButton("MainPage/TPVButton", () => {
                 if (TPVMode == TPVModes.BACK) {
-                    if (flipped) {
-                        flipped = false;
-                        ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                        TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                        FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                    if (isFaceCamera) {
+                        Flip();
                     }
                 } else if (TPVMode == TPVModes.FRONT) {
-                    if (!flipped) {
-                        flipped = true;
-                        ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                        TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                        FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                    if (!isFaceCamera) {
+                        Flip();
                     }
                 }
 
@@ -340,82 +320,68 @@ namespace CameraMod.Camera {
                 tpv = true;
             });
             
-            AddButton("MinDistDownButton", () => {
+            AddButton("MiscPage/MinDistDownButton", () => {
                 minDist -= 0.1f;
                 if (minDist < 1) minDist = 1;
-                MinDistText.text = minDist.ToString();
+                MinDistText.text = minDist.ToString("#.##");
             });
-            AddButton("MinDistUpButton", () => {
+            AddButton("MiscPage/MinDistUpButton", () => {
                 minDist += 0.1f;
                 if (minDist > 10) minDist = 10;
-                MinDistText.text = minDist.ToString();
+                MinDistText.text = minDist.ToString("#.##");
             });
-            AddButton("SpeedUpButton", () => {
+            AddButton("MiscPage/SpeedUpButton", () => {
                 fpspeed += 0.01f;
                 if (fpspeed > 0.1) fpspeed = 0.1f;
-                SpeedText.text = fpspeed.ToString();
+                SpeedText.text = fpspeed.ToString("#.##");
             });
-            AddButton("SpeedDownButton", () => {
+            AddButton("MiscPage/SpeedDownButton", () => {
                 fpspeed -= 0.01f;
                 if (fpspeed < 0.01) fpspeed = 0.01f;
-                SpeedText.text = fpspeed.ToString();
+                SpeedText.text = fpspeed.ToString("#.##");
             });
-            AddButton("TPModeDownButton", () => {
+            AddButton("MiscPage/TPModeDownButton", () => {
                 if (TPVMode == TPVModes.BACK)
                     TPVMode = TPVModes.FRONT;
                 else
                     TPVMode = TPVModes.BACK;
                 TPText.text = TPVMode.ToString();
             });
-            AddButton("TPModeUpButton", () => {
+            AddButton("MiscPage/TPModeUpButton", () => {
                 if (TPVMode == TPVModes.BACK)
                     TPVMode = TPVModes.FRONT;
                 else
                     TPVMode = TPVModes.BACK;
                 TPText.text = TPVMode.ToString();
             });
-            AddButton("TPRotButton", () => {
+            AddButton("MiscPage/TPRotButton", () => {
                 followheadrot = !followheadrot;
                 TPRotText.text = followheadrot.ToString().ToUpper();
             });
-            AddButton("TPRotButton1", () => {
+            AddButton("MiscPage/TPRotButton1", () => {
                 followheadrot = !followheadrot;
                 TPRotText.text = followheadrot.ToString().ToUpper();
             });
             
-            AddButton("GreenScreenButton", () => {
+            AddButton("MiscPage/GreenScreenButton", () => {
                 ColorScreenGO.active = !ColorScreenGO.active;
                 if (ColorScreenGO.active)
                     ColorScreenText.text = "(ENABLED)";
                 else
                     ColorScreenText.text = "(DISABLED)";
             });
-
-            void SetColor(UnityEngine.Color color) {
-                foreach (var mat in ScreenMats) mat.color = color;
-            }
-            
-            AddButton("RedButton", () => {
-                SetColor(Color.red);
-            });
-            AddButton("GreenButton", () => {
-                SetColor(Color.green);
-            });
-            AddButton("BlueButton", () => {
-                SetColor(Color.blue);
-            });
         }
         
-        public void AddButton(string buttonName, Action onClick) {
+        public void AddButton(string buttonPath, Action onClick) {
             Buttons.Add(
-                GameObject.Find("CameraTablet(Clone)/MainPage/"+buttonName)
+                GameObject.Find("CameraTablet(Clone)/"+buttonPath)
                     .AddComponent<YzGButton>()
                     .OnClick(onClick)
             );
         }
-        public void AddHoldableButton(string buttonName, Action onClick) {
+        public void AddHoldableButton(string buttonPath, Action onClick) {
             Buttons.Add(
-                GameObject.Find("CameraTablet(Clone)/MainPage/"+buttonName)
+                GameObject.Find("CameraTablet(Clone)/"+buttonPath)
                     .AddComponent<YzGButton>()
                     .MakeHoldable()
                     .OnClick(onClick)
@@ -459,11 +425,8 @@ namespace CameraMod.Camera {
 
             if (fp) {
                 CameraTablet.transform.LookAt(2f * CameraTablet.transform.position - CameraFollower.transform.position);
-                if (!flipped) {
-                    flipped = true;
-                    ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                    TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
-                    FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                if (!isFaceCamera) {
+                    Flip();
                 }
 
                 dist = Vector3.Distance(CameraFollower.transform.position, CameraTablet.transform.position);

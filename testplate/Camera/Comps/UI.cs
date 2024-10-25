@@ -111,11 +111,12 @@ namespace CameraMod.Camera.Comps {
                         followobject = null;
                     }
 
-                    if (freecam)
-                        tabletTransform.position = Player.Instance.headCollider.transform.position +
-                                                   Player.Instance.headCollider.transform.forward;
-                    if (!CameraController.Instance.flipped) {
-                        CameraController.Instance.flipped = true;
+                    if (freecam) {
+                        var headT = Player.Instance.headCollider.transform;
+                        tabletTransform.position = headT.position + headT.forward;
+                    }
+                    if (!CameraController.Instance.isFaceCamera) {
+                        CameraController.Instance.isFaceCamera = true;
                         CameraController.Instance.ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
                         CameraController.Instance.TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
                         CameraController.Instance.FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
@@ -170,8 +171,8 @@ namespace CameraMod.Camera.Comps {
                                 CameraController.Instance.fp = false;
                                 CameraController.Instance.fpv = false;
                                 CameraController.Instance.tpv = false;
-                                if (CameraController.Instance.flipped) {
-                                    CameraController.Instance.flipped = false;
+                                if (CameraController.Instance.isFaceCamera) {
+                                    CameraController.Instance.isFaceCamera = false;
                                     CameraController.Instance.ThirdPersonCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
                                     CameraController.Instance.TabletCameraGO.transform.Rotate(0.0f, 180f, 0.0f);
                                     CameraController.Instance.FakeWebCam.transform.Rotate(-180f, 180f, 0.0f);

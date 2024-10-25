@@ -7,7 +7,7 @@ namespace CameraMod.Camera.Patches {
     internal class StartPatch {
         private static void Postfix() {
             new GameObject().AddComponent<CameraController>();
-            CameraController.Instance.YizziStart();
+            CameraController.Instance.Init();
         }
     }
 }

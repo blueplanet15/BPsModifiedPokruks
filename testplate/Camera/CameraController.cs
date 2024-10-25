@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using CameraMod.Button;
+using CameraMod.Button.Buttons;
 using CameraMod.Camera.Comps;
 using Cinemachine;
 using GorillaLocomotion;
@@ -42,8 +44,8 @@ namespace CameraMod.Camera {
         public GameObject CameraFollower;
         public GameObject TPVBodyFollower;
         public GameObject ColorScreenGO;
-        private List<YzGButton> Buttons = new List<YzGButton>();
-        public List<GameObject> ColorButtons = new List<GameObject>();
+        private List<BaseButton> Buttons = new List<BaseButton>();
+        public List<BaseButton> ColorButtons = new List<BaseButton>();
         public List<Material> ScreenMats = new List<Material>();
         public List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
@@ -62,7 +64,7 @@ namespace CameraMod.Camera {
         public Text TPRotText;
 
         public bool followheadrot = true;
-        [FormerlySerializedAs("isFrontCamera")] [FormerlySerializedAs("flipped")] public bool isFaceCamera;
+        public bool isFaceCamera;
         public bool tpv;
         public bool fpv = true;
         public bool fp;
@@ -215,13 +217,22 @@ namespace CameraMod.Camera {
 
             ColorScreenText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/ColorScreenText")
                 .GetComponent<Text>();
-
-            ColorButtons.Add(GameObject.Find("ColorScreen(Clone)/Stuff/RedButton"));
-            ColorButtons.Add(GameObject.Find("ColorScreen(Clone)/Stuff/GreenButton"));
-            ColorButtons.Add(GameObject.Find("ColorScreen(Clone)/Stuff/BlueButton"));
-
-            foreach (var btns in ColorButtons) btns.AddComponent<YzGButton>();
-
+            
+            
+            void SetColor(UnityEngine.Color color) {
+                foreach (var mat in ScreenMats) mat.color = color;
+            }
+            
+            ColorButtons.Add(Button("ColorScreen(Clone)/Stuff/RedButton", () => {
+                SetColor(Color.red);
+            }));
+            ColorButtons.Add(Button("ColorScreen(Clone)/Stuff/GreenButton", () => {
+                SetColor(Color.green);
+            }));
+            ColorButtons.Add(Button("ColorScreen(Clone)/Stuff/BlueButton", () => {
+                SetColor(Color.blue);
+            }));
+            
             ScreenMats.Add(GameObject.Find("ColorScreen(Clone)/Screen1").GetComponent<MeshRenderer>().material);
             ScreenMats.Add(GameObject.Find("ColorScreen(Clone)/Screen2").GetComponent<MeshRenderer>().material);
             ScreenMats.Add(GameObject.Find("ColorScreen(Clone)/Screen3").GetComponent<MeshRenderer>().material);
@@ -265,12 +276,12 @@ namespace CameraMod.Camera {
         }
         
         public void RegisterButtons() {
-            AddButton("MainPage/MiscButton", () => {
+            AddTabletButton("MainPage/MiscButton", () => {
                 MainPage.SetActive(false);
                 MiscPage.SetActive(true);
             });
             
-            AddButton("MainPage/FPVButton", () => {
+            AddTabletButton("MainPage/FPVButton", () => {
                 if (isFaceCamera) {
                     Flip();
                 }
@@ -282,29 +293,29 @@ namespace CameraMod.Camera {
             AddHoldableButton("MainPage/SmoothingDownButton", () => ChangeSmoothing(-0.01f));
             AddHoldableButton("MainPage/SmoothingUpButton", () => ChangeSmoothing(0.01f));
             
-            AddButton("MainPage/FovUP", () => ChangeFov(5));
-            AddButton("MainPage/FovDown", () => ChangeFov(-5));
+            AddTabletButton("MainPage/FovUP", () => ChangeFov(5));
+            AddTabletButton("MainPage/FovDown", () => ChangeFov(-5));
             
-            AddButton("MainPage/NearClipUp", () => ChangeNearClip(0.01f));
-            AddButton("MainPage/NearClipDown", () => ChangeNearClip(-0.01f));
+            AddTabletButton("MainPage/NearClipUp", () => ChangeNearClip(0.01f));
+            AddTabletButton("MainPage/NearClipDown", () => ChangeNearClip(-0.01f));
             
-            AddButton("MainPage/FlipCamButton", () => {
+            AddTabletButton("MainPage/FlipCamButton", () => {
                 Flip();
             });
             
-            AddButton("MainPage/FPButton", () => fp = !fp);
+            AddTabletButton("MainPage/FPButton", () => fp = !fp);
             
-            AddButton("MainPage/ControlsButton", () => {
+            AddTabletButton("MainPage/ControlsButton", () => {
                 if (!openedurl) {
                     Application.OpenURL("https://github.com/Yizzii/YizziCamModV2#controls");
                     openedurl = true;
                 }
             });
-            AddButton("MiscPage/BackButton", () => {
+            AddTabletButton("MiscPage/BackButton", () => {
                 MainPage.SetActive(true);
                 MiscPage.SetActive(false);
             });
-            AddButton("MainPage/TPVButton", () => {
+            AddTabletButton("MainPage/TPVButton", () => {
                 if (TPVMode == TPVModes.BACK) {
                     if (isFaceCamera) {
                         Flip();
@@ -320,50 +331,50 @@ namespace CameraMod.Camera {
                 tpv = true;
             });
             
-            AddButton("MiscPage/MinDistDownButton", () => {
+            AddTabletButton("MiscPage/MinDistDownButton", () => {
                 minDist -= 0.1f;
                 if (minDist < 1) minDist = 1;
                 MinDistText.text = minDist.ToString("#.##");
             });
-            AddButton("MiscPage/MinDistUpButton", () => {
+            AddTabletButton("MiscPage/MinDistUpButton", () => {
                 minDist += 0.1f;
                 if (minDist > 10) minDist = 10;
                 MinDistText.text = minDist.ToString("#.##");
             });
-            AddButton("MiscPage/SpeedUpButton", () => {
+            AddTabletButton("MiscPage/SpeedUpButton", () => {
                 fpspeed += 0.01f;
                 if (fpspeed > 0.1) fpspeed = 0.1f;
                 SpeedText.text = fpspeed.ToString("#.##");
             });
-            AddButton("MiscPage/SpeedDownButton", () => {
+            AddTabletButton("MiscPage/SpeedDownButton", () => {
                 fpspeed -= 0.01f;
                 if (fpspeed < 0.01) fpspeed = 0.01f;
                 SpeedText.text = fpspeed.ToString("#.##");
             });
-            AddButton("MiscPage/TPModeDownButton", () => {
+            AddTabletButton("MiscPage/TPModeDownButton", () => {
                 if (TPVMode == TPVModes.BACK)
                     TPVMode = TPVModes.FRONT;
                 else
                     TPVMode = TPVModes.BACK;
                 TPText.text = TPVMode.ToString();
             });
-            AddButton("MiscPage/TPModeUpButton", () => {
+            AddTabletButton("MiscPage/TPModeUpButton", () => {
                 if (TPVMode == TPVModes.BACK)
                     TPVMode = TPVModes.FRONT;
                 else
                     TPVMode = TPVModes.BACK;
                 TPText.text = TPVMode.ToString();
             });
-            AddButton("MiscPage/TPRotButton", () => {
+            AddTabletButton("MiscPage/TPRotButton", () => {
                 followheadrot = !followheadrot;
                 TPRotText.text = followheadrot.ToString().ToUpper();
             });
-            AddButton("MiscPage/TPRotButton1", () => {
+            AddTabletButton("MiscPage/TPRotButton1", () => {
                 followheadrot = !followheadrot;
                 TPRotText.text = followheadrot.ToString().ToUpper();
             });
             
-            AddButton("MiscPage/GreenScreenButton", () => {
+            AddTabletButton("MiscPage/GreenScreenButton", () => {
                 ColorScreenGO.active = !ColorScreenGO.active;
                 if (ColorScreenGO.active)
                     ColorScreenText.text = "(ENABLED)";
@@ -371,19 +382,20 @@ namespace CameraMod.Camera {
                     ColorScreenText.text = "(DISABLED)";
             });
         }
-        
-        public void AddButton(string buttonPath, Action onClick) {
-            Buttons.Add(
-                GameObject.Find("CameraTablet(Clone)/"+buttonPath)
-                    .AddComponent<YzGButton>()
-                    .OnClick(onClick)
-            );
+
+        public ClickButton Button(string buttonPath, Action onClick) {
+            var button = GameObject.Find(buttonPath)
+                .AddComponent<ClickButton>();
+            button.OnClick(onClick);
+            return button;
+        }
+        public void AddTabletButton(string relativeButtonPath, Action onClick) {
+            Buttons.Add(Button("CameraTablet(Clone)/" + relativeButtonPath, onClick));
         }
         public void AddHoldableButton(string buttonPath, Action onClick) {
             Buttons.Add(
                 GameObject.Find("CameraTablet(Clone)/"+buttonPath)
-                    .AddComponent<YzGButton>()
-                    .MakeHoldable()
+                    .AddComponent<HoldableButton>()
                     .OnClick(onClick)
             );
         }

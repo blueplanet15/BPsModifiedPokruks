@@ -18,7 +18,7 @@ namespace CameraMod.Button.Buttons {
         private void OnTriggerEnter(Collider col) {
             if (CameraController.Instance.ButtonsTimeouted) return;
             
-            if (isHand(col)) {
+            if (!isHand(col)) {
                 return;
             }
             collidersCount += 1;
@@ -28,7 +28,7 @@ namespace CameraMod.Button.Buttons {
         private void OnTriggerStay(Collider col) {
             if (CameraController.Instance.ButtonsTimeouted) return;
             
-            if (isHand(col)) return;
+            if (!isHand(col)) return;
 
             if (isHolding && (Time.time - lastHoldTick) >  holdTickInterval) {
                 onClick?.Invoke();
@@ -40,7 +40,7 @@ namespace CameraMod.Button.Buttons {
         private void OnTriggerExit(Collider col) {
             if (CameraController.Instance.ButtonsTimeouted) return;
             
-            if (isHand(col)) {
+            if (!isHand(col)) {
                 return;
             }
             collidersCount -= 1;

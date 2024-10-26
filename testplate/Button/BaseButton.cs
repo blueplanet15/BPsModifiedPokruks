@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace CameraMod.Button {
     public abstract class BaseButton : MonoBehaviour {
-        public bool isHand(Collider col) => col.name != "RightHandTriggerCollider" && col.name != "LeftHandTriggerCollider";
+        public bool isHand(Collider col) => col.name == "RightHandTriggerCollider" || col.name == "LeftHandTriggerCollider";
         public bool isLeft(Collider col) => col.name == "LeftHandTriggerCollider";
         
         public Action onClick;

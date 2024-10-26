@@ -11,7 +11,7 @@ namespace CameraMod.Button.Buttons {
         private void OnTriggerEnter(Collider col) {
             if (CameraController.Instance.ButtonsTimeouted) return;
             
-            if (isHand(col)) {
+            if (!isHand(col)) {
                 return;
             }
 

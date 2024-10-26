@@ -159,24 +159,19 @@ namespace CameraMod.Camera.Comps {
                         cloudsbottom.SetActive(false);
                         citybuildings.SetActive(false);
                     }
-
                 if (specui) {
                     var i = 1;
-                    foreach (var player in rigcache.GetComponentsInChildren<VRRig>()) {
-                        if (player.transform.parent.gameObject.active) {
-                            GUI.Label(new Rect(250, 20 + i * 25, 160, 20), player.playerName);
-                            if (GUI.Button(new Rect(360, 20 + i * 25, 67, 20), "Spectate")) {
-                                followobject = player.gameObject;
-                                spectating = true;
-                                CameraController.Instance.fp = false;
-                                CameraController.Instance.fpv = false;
-                                CameraController.Instance.tpv = false;
-                                if (CameraController.Instance.isFaceCamera) {
-                                    CameraController.Instance.isFaceCamera = false;
-                                    CameraController.Instance.thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-                                    CameraController.Instance.tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-                                    CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
-                                }
+                    foreach (var player in GorillaParent.instance.vrrigs.Where(rig => rig != GorillaTagger.Instance.offlineVRRig)) {
+                        var playerName = player.playerText1.text;
+                        GUI.Label(new Rect(250, 20 + i * 25, 160, 20), playerName);
+                        if (GUI.Button(new Rect(360, 20 + i * 25, 67, 20), "Spectate")) {
+                            followobject = player.gameObject;
+                            spectating = true;
+                            CameraController.Instance.fp = false;
+                            CameraController.Instance.fpv = false;
+                            CameraController.Instance.tpv = false;
+                            if (CameraController.Instance.isFaceCamera) {
+                                CameraController.Instance.Flip();
                             }
                         }
 

@@ -5,6 +5,7 @@
 * Settings save: smoothing, camera clipping, FOV — all that **automatically saves**, so you don't need to set it up every time you restart the game.
 * Adjustable camera activation bind.
 * You can adjust camera bind settings at runtime, no need to restart the game.
+* Spectating other players
 
 ## Controls
 * Press your camera activation bind to spawn the camera in front of you (see the controls config guide below).

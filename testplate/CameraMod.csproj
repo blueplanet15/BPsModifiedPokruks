@@ -55,24 +55,8 @@
         <Reference Include="Fusion.Unity">
             <HintPath>$(GameAssemblyPath)\Fusion.Unity.dll</HintPath>
         </Reference>
-        <Reference Include="Mono.Security">
-            <HintPath>$(GameAssemblyPath)\Mono.Security.dll</HintPath>
-        </Reference>
-        <Reference Include="NAudio.Core">
-            <HintPath>$(PluginsPath)\NAudio.Core.dll</HintPath>
-        </Reference>
-
-        <Reference Include="NAudio.Midi">
-            <HintPath>$(PluginsPath)\NAudio.Midi.dll</HintPath>
-        </Reference>
         <Reference Include="Newtonsoft.Json">
             <HintPath>$(GameAssemblyPath)\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="Newtonsoft.Json.UnityConverters">
-            <HintPath>$(GameAssemblyPath)\Newtonsoft.Json.UnityConverters.dll</HintPath>
-        </Reference>
-        <Reference Include="Newtonsoft.Json.UnityConverters.Addressables">
-            <HintPath>$(GameAssemblyPath)\Newtonsoft.Json.UnityConverters.Addressables.dll</HintPath>
         </Reference>
         <Reference Include="Oculus.Platform">
             <HintPath>$(GameAssemblyPath)\Oculus.Platform.dll</HintPath>

@@ -1,7 +1,8 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
-
+using GorillaTag;
 namespace CameraMod.Camera.Patches {
     public class HarmonyPatcher : MonoBehaviour {
         public static Harmony instance;

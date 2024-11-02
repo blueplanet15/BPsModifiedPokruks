@@ -97,6 +97,12 @@ namespace CameraMod.Camera.Comps {
             GUI.Label(labelRect, "Pokruk's Camera Mod", style);
         }
 
+        public void SpecMode() {
+            CameraController.Instance.fpv = false;
+            CameraController.Instance.fp = false;
+            CameraController.Instance.tpv = false;
+        }
+        
         public bool watermarkEnabled = true;
         private void OnGUI() {
             if (watermarkEnabled) {
@@ -122,9 +128,7 @@ namespace CameraMod.Camera.Comps {
                         CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
                     }
 
-                    CameraController.Instance.fpv = false;
-                    CameraController.Instance.fp = false;
-                    CameraController.Instance.tpv = false;
+                    SpecMode();
                     freecam = !freecam;
                 }
 
@@ -132,9 +136,7 @@ namespace CameraMod.Camera.Comps {
                     if (!freecam)
                         if (PhotonNetwork.InRoom)
                             specui = !specui;
-                    CameraController.Instance.fpv = false;
-                    CameraController.Instance.fp = false;
-                    CameraController.Instance.tpv = false;
+                    SpecMode();
                 }
 
                 if (GUI.Button(new Rect(140f, 90f, 45f, 20f), "StopIfPlaying"))
@@ -167,9 +169,7 @@ namespace CameraMod.Camera.Comps {
                         if (GUI.Button(new Rect(360, 20 + i * 25, 67, 20), "Spectate")) {
                             followobject = player.gameObject;
                             spectating = true;
-                            CameraController.Instance.fp = false;
-                            CameraController.Instance.fpv = false;
-                            CameraController.Instance.tpv = false;
+                            SpecMode();
                             if (CameraController.Instance.isFaceCamera) {
                                 CameraController.Instance.Flip();
                             }

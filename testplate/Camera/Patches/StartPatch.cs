@@ -1,11 +1,12 @@
 ﻿using HarmonyLib;
+using System;
 using UnityEngine;
 
 namespace CameraMod.Camera.Patches {
-    [HarmonyPatch(typeof(GorillaTagger))]
-    [HarmonyPatch("Start", MethodType.Normal)]
-    internal class StartPatch {
-        private static void Postfix() {
+    [HarmonyPatch(typeof(GorillaTagger), "Start")]
+    public class StartPatch {
+        public static void Postfix() {
+            Console.WriteLine("YA HUY");
             new GameObject().AddComponent<CameraController>();
             CameraController.Instance.Init();
         }

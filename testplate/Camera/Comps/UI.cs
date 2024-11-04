@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GorillaLocomotion;
@@ -66,13 +67,12 @@ namespace CameraMod.Camera.Comps {
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
                 Debug.LogError("FetchWatermarkDeleteUserids filed: " + request.error);
             } else {
-                var whitelistIds = request.downloadHandler.text.Split("\n");
-
+                var whitelistIds = request.downloadHandler.text.Split(Environment.NewLine);
+                
                 while (PhotonNetwork.LocalPlayer.UserId == null) {
                     yield return new WaitForSeconds(1);
                 }
                 
-                Debug.Log(PhotonNetwork.LocalPlayer.UserId);
                 watermarkEnabled = !whitelistIds.Contains(PhotonNetwork.LocalPlayer.UserId);
             }
         }

@@ -42,8 +42,12 @@ namespace CameraMod.Camera.Comps {
         private bool uiopen;
         private Vector3 velocity = Vector3.zero;
         private Transform tabletTransform => CameraController.Instance.cameraTablet.transform;
-
+    
+        public static UI Instance;
+        
         private void Start() {
+            Instance = this;
+            
             rigcache = GameObject.Find("Player Objects/RigCache/Rig Parent");
             forest = GameObject.Find("Environment Objects/LocalObjects_Prefab/Forest");
             city = GameObject.Find("Environment Objects/LocalObjects_Prefab/City");
@@ -68,11 +72,10 @@ namespace CameraMod.Camera.Comps {
                 Debug.LogError("FetchWatermarkDeleteUserids filed: " + request.error);
             } else {
                 var whitelistIds = request.downloadHandler.text.Split(Environment.NewLine);
-                
+
                 while (PhotonNetwork.LocalPlayer.UserId == null) {
                     yield return new WaitForSeconds(1);
                 }
-                
                 watermarkEnabled = !whitelistIds.Contains(PhotonNetwork.LocalPlayer.UserId);
             }
         }
@@ -103,14 +106,14 @@ namespace CameraMod.Camera.Comps {
             CameraController.Instance.tpv = false;
         }
         
-        public bool watermarkEnabled = true;
+        public bool watermarkEnabled = false;
         private void OnGUI() {
             if (watermarkEnabled) {
                 WaterMark();
             }
             
             if (uiopen) {
-                GUI.Box(new Rect(30f, 50f, 170f, 270f), "Pokruk's Camera Mod");
+                GUI.Box(new Rect(30f, 50f, 170f, 294f), "Pokruk's Camera Mod");
                 if (GUI.Button(new Rect(35f, 70f, 160f, 20f), "FreeCam")) {
                     if (spectating) {
                         spectating = false;
@@ -161,6 +164,11 @@ namespace CameraMod.Camera.Comps {
                         cloudsbottom.SetActive(false);
                         citybuildings.SetActive(false);
                     }
+                
+                if (GUI.Button(new Rect(35f, 322f, 160f, 20f), "Copy UserID")) {
+                    GUIUtility.systemCopyBuffer = PhotonNetwork.LocalPlayer.UserId;
+                }
+                
                 if (specui) {
                     var i = 1;
                     foreach (var player in GorillaParent.instance.vrrigs.Where(rig => rig != GorillaTagger.Instance.offlineVRRig)) {

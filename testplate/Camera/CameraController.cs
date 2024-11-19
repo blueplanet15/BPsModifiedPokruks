@@ -403,8 +403,11 @@ namespace CameraMod.Camera {
                 }
 
                 cameraTablet.transform.position = cameraFollower.transform.position;
-                cameraTablet.transform.rotation = Quaternion.Lerp(cameraTablet.transform.rotation,
-                    cameraFollower.transform.rotation, smoothing);
+
+                var lerpedEuler = Quaternion.Lerp(cameraTablet.transform.rotation,
+                    cameraFollower.transform.rotation, smoothing).eulerAngles;
+                lerpedEuler.Scale(new Vector3(1,1,0));
+                cameraTablet.transform.rotation = Quaternion.Euler(lerpedEuler);
             }
 
             if (BindEnabled && Binds.Tablet() && cameraTablet.transform.parent == null) {

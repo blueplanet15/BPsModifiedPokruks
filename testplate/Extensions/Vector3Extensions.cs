@@ -1,5 +1,4 @@
-﻿using Unity.Mathematics;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace CameraMod {
     public static class Vector3Extensions {
@@ -8,7 +7,7 @@ namespace CameraMod {
         }
 
         public static Quaternion ToQuaternion(this Vector3 vec) {
-            return quaternion.Euler(vec);
+            return Quaternion.Euler(vec);
         }
     }
 }

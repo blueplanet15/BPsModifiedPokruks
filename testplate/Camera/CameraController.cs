@@ -260,6 +260,16 @@ namespace CameraMod.Camera {
         private float lastPageChangedTime;
         private readonly float pageChangeButtonsTimeout = 0.2f;
         public bool ButtonsTimeouted => Time.time - lastPageChangedTime < pageChangeButtonsTimeout;
+
+        public void EnableFPV() {
+            if (isFaceCamera) {
+                Flip();
+            }
+
+            fp = false;
+            fpv = true;
+            UI.Instance.freecam = false;
+        }
         
         public void RegisterButtons() {
             AddTabletButton("MainPage/MiscButton", () => {
@@ -274,12 +284,7 @@ namespace CameraMod.Camera {
             });
             
             AddTabletButton("MainPage/FPVButton", () => {
-                if (isFaceCamera) {
-                    Flip();
-                }
-
-                fp = false;
-                fpv = true;
+                EnableFPV();
             });
             
             AddHoldableTabletButton("MainPage/SmoothingDownButton", () => ChangeSmoothing(-0.01f));

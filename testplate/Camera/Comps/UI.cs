@@ -26,7 +26,7 @@ namespace CameraMod.Camera.Comps {
         private bool controllerfreecam;
         private bool controloffset;
         private GameObject followobject;
-        private bool freecam;
+        public bool freecam;
         private float freecamsens = 1f;
         private float freecamspeed = 0.1f;
         private bool keyp;
@@ -100,6 +100,9 @@ namespace CameraMod.Camera.Comps {
             GUI.Label(labelRect, "Pokruk's Camera Mod", style);
         }
 
+        public bool IsSpecMode() {
+            return !CameraController.Instance.fpv && !CameraController.Instance.fp && !CameraController.Instance.tpv;
+        }
         public void SpecMode() {
             CameraController.Instance.fpv = false;
             CameraController.Instance.fp = false;
@@ -114,25 +117,25 @@ namespace CameraMod.Camera.Comps {
             
             if (uiopen) {
                 GUI.Box(new Rect(30f, 50f, 170f, 294f), "Pokruk's Camera Mod");
-                if (GUI.Button(new Rect(35f, 70f, 160f, 20f), "FreeCam")) {
-                    if (spectating) {
-                        spectating = false;
-                        followobject = null;
-                    }
+                if (GUI.Button(new Rect(35f, 70f, 160f, 20f), freecam ? "FirstPersonView" : "FreeCam")) {
+                    if (!freecam) {
+                        if (spectating) {
+                            spectating = false;
+                            followobject = null;
+                        }
+                        
+                        if (!CameraController.Instance.isFaceCamera) {
+                            CameraController.Instance.isFaceCamera = true;
+                            CameraController.Instance.thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
+                            CameraController.Instance.tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
+                            CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                        }
 
-                    if (freecam) {
-                        var headT = Player.Instance.headCollider.transform;
-                        tabletTransform.position = headT.position + headT.forward;
+                        SpecMode();
+                        freecam = true;
+                    } else {
+                        CameraController.Instance.EnableFPV();
                     }
-                    if (!CameraController.Instance.isFaceCamera) {
-                        CameraController.Instance.isFaceCamera = true;
-                        CameraController.Instance.thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-                        CameraController.Instance.tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-                        CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
-                    }
-
-                    SpecMode();
-                    freecam = !freecam;
                 }
 
                 if (GUI.Button(new Rect(35f, 90f, 100f, 20f), "Spectator")) {

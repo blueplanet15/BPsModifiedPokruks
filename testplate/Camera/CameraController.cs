@@ -392,7 +392,7 @@ namespace CameraMod.Camera {
         public void SetTabletVisibility(bool visible) {
             foreach (var mr in meshRenderers) mr.enabled = visible;
         }
-
+        public static bool NoTiltMode = true;
         public void AnUpdate() {
             if (!init) return;
 
@@ -401,13 +401,17 @@ namespace CameraMod.Camera {
                     SetTabletVisibility(false);
                     mainPage.active = false;
                 }
-
-                cameraTablet.transform.position = cameraFollower.transform.position;
-
-                var lerpedEuler = Quaternion.Lerp(cameraTablet.transform.rotation,
-                    cameraFollower.transform.rotation, smoothing).eulerAngles;
-                lerpedEuler.Scale(new Vector3(1,1,0));
-                cameraTablet.transform.rotation = Quaternion.Euler(lerpedEuler);
+                var camera = cameraTablet.transform;
+                var follower = cameraFollower.transform;
+                
+                
+                camera.position = follower.position;
+                
+                var newRotation = camera.rotation.Lerped(follower.rotation, smoothing);
+                if (NoTiltMode) {
+                    newRotation = newRotation.eulerAngles.Scaled(new Vector3(1,1,0)).ToQuaternion();
+                }
+                camera.rotation = newRotation;
             }
 
             if (BindEnabled && Binds.Tablet() && cameraTablet.transform.parent == null) {

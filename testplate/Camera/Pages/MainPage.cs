@@ -10,6 +10,8 @@ namespace CameraMod.Camera.Pages {
         public Text NearClipText;
         
         public MainPage(GameObject rootObject) {
+            GO = rootObject;
+            
             var rootT = rootObject.transform;
             
             FOVText = rootT.Find("Canvas/FovValueText").GetComponent<Text>();

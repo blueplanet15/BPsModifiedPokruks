@@ -4,6 +4,7 @@ using System.Reflection;
 using CameraMod.Button;
 using CameraMod.Button.Buttons;
 using CameraMod.Camera.Comps;
+using CameraMod.Camera.Pages;
 using Cinemachine;
 using GorillaLocomotion;
 using UnityEngine;
@@ -35,10 +36,8 @@ namespace CameraMod.Camera {
         public GameObject cmVirtualCameraGo;
         public GameObject fakeWebCam;
         public GameObject tabletCameraGo;
-        public GameObject mainPage;
-        public GameObject miscPage;
-        public GameObject leftGrabCol;
-        public GameObject rightGrabCol;
+        public MainPage mainPage;
+        public MiscPage miscPage;
         public GameObject cameraFollower;
         public GameObject tpvBodyFollower;
         public GameObject colorScreenGo;
@@ -52,14 +51,7 @@ namespace CameraMod.Camera {
         public UnityEngine.Camera thirdPersonCamera;
         public CinemachineVirtualCamera cmVirtualCamera;
 
-        public Text fovText;
-        public Text nearClipText;
         public Text colorScreenText;
-        public Text minDistText;
-        public Text speedText;
-        public Text smoothText;
-        public Text tpText;
-        public Text tpRotText;
 
         public bool followheadrot = true;
         public bool isFaceCamera;
@@ -81,7 +73,6 @@ namespace CameraMod.Camera {
         }
 
         private void Update() {
-            //void LateUpdate() {
             if (UpdateMode == UpdateMode.Update) AnUpdate();
         }
 
@@ -102,7 +93,7 @@ namespace CameraMod.Camera {
             }
 
             thirdPersonCamera.nearClipPlane = tabletCamera.nearClipPlane;
-            nearClipText.text = tabletCamera.nearClipPlane.ToString("#.##");
+            mainPage.NearClipText.text = tabletCamera.nearClipPlane.ToString("#.##");
         }
 
         public void ChangeNearClip(float diff) {
@@ -117,7 +108,7 @@ namespace CameraMod.Camera {
             smoothing = val;
             if (smoothing < MIN_SMOOTHING) smoothing = MIN_SMOOTHING;
             if (smoothing > MAX_SMOOTHING) smoothing = MAX_SMOOTHING;
-            smoothText.text = smoothing.ToString("#.##");
+            mainPage.SmoothText.text = smoothing.ToString("#.##");
         }
         public void ChangeSmoothing(float change) {
             SetSmoothing(smoothing + change);
@@ -138,7 +129,7 @@ namespace CameraMod.Camera {
             var newFov = fov;
             tabletCamera.fieldOfView = newFov;
             thirdPersonCamera.fieldOfView = newFov;
-            fovText.text = tabletCamera.fieldOfView.ToString("#.##");
+            mainPage.FOVText.text = tabletCamera.fieldOfView.ToString("#.##");
         }
         
         public void Init() {
@@ -170,20 +161,10 @@ namespace CameraMod.Camera {
             tabletCamera = tabletCameraGo.GetComponent<UnityEngine.Camera>();
 
             fakeWebCam = GameObject.Find("CameraTablet(Clone)/FakeCamera");
-            leftGrabCol = GameObject.Find("CameraTablet(Clone)/LeftGrabCol");
-            rightGrabCol = GameObject.Find("CameraTablet(Clone)/RightGrabCol");
-            leftGrabCol.AddComponent<LeftGrabTrigger>();
-            rightGrabCol.AddComponent<RightGrabTrigger>();
-            mainPage = GameObject.Find("CameraTablet(Clone)/MainPage");
-            miscPage = GameObject.Find("CameraTablet(Clone)/MiscPage");
-            fovText = GameObject.Find("CameraTablet(Clone)/MainPage/Canvas/FovValueText").GetComponent<Text>();
-            smoothText = GameObject.Find("CameraTablet(Clone)/MainPage/Canvas/SmoothingValueText").GetComponent<Text>();
-            nearClipText = GameObject.Find("CameraTablet(Clone)/MainPage/Canvas/NearClipValueText")
-                .GetComponent<Text>();
-            minDistText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/MinDistValueText").GetComponent<Text>();
-            speedText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/SpeedValueText").GetComponent<Text>();
-            tpText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/TPText").GetComponent<Text>();
-            tpRotText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/TPRotText").GetComponent<Text>();
+            GameObject.Find("CameraTablet(Clone)/LeftGrabCol").AddComponent<LeftGrabTrigger>();
+            GameObject.Find("CameraTablet(Clone)/RightGrabCol").AddComponent<RightGrabTrigger>();
+            mainPage = new MainPage(GameObject.Find("CameraTablet(Clone)/MainPage"));
+            miscPage = new MiscPage(GameObject.Find("CameraTablet(Clone)/MiscPage"));
             
             RegisterButtons();
             
@@ -236,7 +217,7 @@ namespace CameraMod.Camera {
             colorScreenGo.transform.position = new Vector3(-54.3f, 16.21f, -122.96f);
             colorScreenGo.transform.Rotate(0, 30, 0);
             colorScreenGo.SetActive(false);
-            miscPage.SetActive(false);
+            miscPage.GO.SetActive(false);
             thirdPersonCamera.nearClipPlane = 0.1f;
             tabletCamera.nearClipPlane = 0.1f;
             fakeWebCam.transform.Rotate(-180, 180, 0);
@@ -273,13 +254,13 @@ namespace CameraMod.Camera {
         
         public void RegisterButtons() {
             AddTabletButton("MainPage/MiscButton", () => {
-                mainPage.SetActive(false);
-                miscPage.SetActive(true);
+                mainPage.GO.SetActive(false);
+                miscPage.GO.SetActive(true);
                 lastPageChangedTime = Time.time;
             });
             AddTabletButton("MiscPage/BackButton", () => {
-                mainPage.SetActive(true);
-                miscPage.SetActive(false);
+                mainPage.GO.SetActive(true);
+                miscPage.GO.SetActive(false);
                 lastPageChangedTime = Time.time;
             });
             
@@ -327,44 +308,44 @@ namespace CameraMod.Camera {
             AddTabletButton("MiscPage/MinDistDownButton", () => {
                 minDist -= 0.1f;
                 if (minDist < 1) minDist = 1;
-                minDistText.text = minDist.ToString("#.##");
+                miscPage.MinDistText.text = minDist.ToString("#.##");
             });
             AddTabletButton("MiscPage/MinDistUpButton", () => {
                 minDist += 0.1f;
                 if (minDist > 10) minDist = 10;
-                minDistText.text = minDist.ToString("#.##");
+                miscPage.MinDistText.text = minDist.ToString("#.##");
             });
             AddTabletButton("MiscPage/SpeedUpButton", () => {
                 fpspeed += 0.01f;
                 if (fpspeed > 0.1) fpspeed = 0.1f;
-                speedText.text = fpspeed.ToString("#.##");
+                miscPage.SpeedText.text = fpspeed.ToString("#.##");
             });
             AddTabletButton("MiscPage/SpeedDownButton", () => {
                 fpspeed -= 0.01f;
                 if (fpspeed < 0.01) fpspeed = 0.01f;
-                speedText.text = fpspeed.ToString("#.##");
+                miscPage.SpeedText.text = fpspeed.ToString("#.##");
             });
             AddTabletButton("MiscPage/TPModeDownButton", () => {
                 if (tpvMode == TpvModes.Back)
                     tpvMode = TpvModes.Front;
                 else
                     tpvMode = TpvModes.Back;
-                tpText.text = tpvMode.ToString();
+                miscPage.TpText.text = tpvMode.ToString();
             });
             AddTabletButton("MiscPage/TPModeUpButton", () => {
                 if (tpvMode == TpvModes.Back)
                     tpvMode = TpvModes.Front;
                 else
                     tpvMode = TpvModes.Back;
-                tpText.text = tpvMode.ToString();
+                miscPage.TpText.text = tpvMode.ToString();
             });
             AddTabletButton("MiscPage/TPRotButton", () => {
                 followheadrot = !followheadrot;
-                tpRotText.text = followheadrot.ToString().ToUpper();
+                miscPage.TpRotText.text = followheadrot.ToString().ToUpper();
             });
             AddTabletButton("MiscPage/TPRotButton1", () => {
                 followheadrot = !followheadrot;
-                tpRotText.text = followheadrot.ToString().ToUpper();
+                miscPage.TpRotText.text = followheadrot.ToString().ToUpper();
             });
             
             AddTabletButton("MiscPage/GreenScreenButton", () => {
@@ -402,9 +383,9 @@ namespace CameraMod.Camera {
             if (!init) return;
 
             if (fpv) {
-                if (mainPage.active) {
+                if (mainPage.GO.active) {
                     SetTabletVisibility(false);
-                    mainPage.active = false;
+                    mainPage.GO.active = false;
                 }
                 var camera = cameraTablet.transform;
                 var follower = cameraFollower.transform;
@@ -423,11 +404,11 @@ namespace CameraMod.Camera {
                 fp = false;
                 fpv = false;
                 tpv = false;
-                if (!mainPage.active) {
+                if (!mainPage.GO.active) {
                     foreach (var btns in buttons) btns.gameObject.SetActive(true);
                     SetTabletVisibility(true);
 
-                    mainPage.active = true;
+                    mainPage.GO.active = true;
                 }
 
                 var headTransform = Player.Instance.headCollider.transform;
@@ -450,9 +431,9 @@ namespace CameraMod.Camera {
             }
 
             if (tpv) {
-                if (mainPage.active) {
+                if (mainPage.GO.active) {
                     SetTabletVisibility(false);
-                    mainPage.active = false;
+                    mainPage.GO.active = false;
                 }
                 
                 switch (tpvMode) {

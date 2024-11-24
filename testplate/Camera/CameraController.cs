@@ -219,7 +219,7 @@ namespace CameraMod.Camera {
                 "ColorScreen(Clone)/Screen3"
             }.ForEach(screenMatPath=>
                 screenMats.Add(
-                    GameObject.Find("ColorScreen(Clone)/Screen1")
+                    GameObject.Find(screenMatPath)
                     .GetComponent<MeshRenderer>()
                     .material)
             );

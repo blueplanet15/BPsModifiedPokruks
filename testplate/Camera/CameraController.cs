@@ -377,7 +377,9 @@ namespace CameraMod.Camera {
 
         public void SetTabletVisibility(bool visible) {
             foreach (var mr in meshRenderers) mr.enabled = visible;
+            tabletCamera.enabled = visible;
         }
+        
         public static bool NoTiltMode = true;
         public void AnUpdate() {
             if (!init) return;

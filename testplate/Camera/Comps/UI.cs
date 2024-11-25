@@ -41,7 +41,7 @@ namespace CameraMod.Camera.Comps {
         private bool specui;
         private bool uiopen;
         private Vector3 velocity = Vector3.zero;
-        private Transform tabletTransform => CameraController.Instance.cameraTablet.transform;
+        private Transform tabletTransform => CameraController.Instance.cameraTabletT;
     
         public static UI Instance;
         

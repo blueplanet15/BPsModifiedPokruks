@@ -30,16 +30,18 @@ namespace CameraMod.Camera {
 
         public static UpdateMode UpdateMode = UpdateMode.Patch;
         public static bool BindEnabled = true;
-        public GameObject cameraTablet;
-        public GameObject firstPersonCameraGo;
+        
+        public Transform cameraTabletT;
+        public Transform cameraFollowerT;
+        public Transform tpvBodyFollowerT;
+        
         public GameObject thirdPersonCameraGo;
-        public GameObject cmVirtualCameraGo;
         public GameObject fakeWebCam;
         public GameObject tabletCameraGo;
+        
         public MainPage mainPage;
         public MiscPage miscPage;
-        public GameObject cameraFollower;
-        public GameObject tpvBodyFollower;
+        
         public GameObject colorScreenGo;
         private readonly List<BaseButton> buttons = new List<BaseButton>();
         public List<BaseButton> colorButtons = new List<BaseButton>();
@@ -47,25 +49,23 @@ namespace CameraMod.Camera {
         public List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
         public UnityEngine.Camera tabletCamera;
-        public UnityEngine.Camera firstPersonCamera;
         public UnityEngine.Camera thirdPersonCamera;
-        public CinemachineVirtualCamera cmVirtualCamera;
 
         public Text colorScreenText;
 
         public bool followheadrot = true;
         public bool isFaceCamera;
+        
         public bool tpv;
         public bool fpv = true;
         public bool fp;
-        public bool openedurl;
+        
         public float minDist = 2f;
         public float fpspeed = 0.01f;
         public float smoothing = 0.07f;
         public TpvModes tpvMode = TpvModes.Back;
-        private float dist;
+        
         private bool init;
-        private Vector3 targetPosition;
         private Vector3 velocity = Vector3.zero;
 
         private void Awake() {
@@ -139,22 +139,23 @@ namespace CameraMod.Camera {
             var assetsPath = Assembly.GetExecutingAssembly().GetName().Name + ".Camera.Assets";
             Debug.Log(assetsPath);
             colorScreenGo = LoadBundle("ColorScreen", assetsPath + ".colorscreen");
-            cameraTablet = LoadBundle("CameraTablet", assetsPath + ".yizzicam");
-            firstPersonCameraGo = tagger.mainCamera;
+            cameraTabletT = LoadBundle("CameraTablet", assetsPath + ".yizzicam").transform;
 
             thirdPersonCameraGo = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera");
-            cmVirtualCameraGo = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera/CM vcam1");
-            tpvBodyFollower = tagger.bodyCollider.gameObject;
-            cmVirtualCamera = cmVirtualCameraGo.GetComponent<CinemachineVirtualCamera>();
-            firstPersonCamera = firstPersonCameraGo.GetComponent<UnityEngine.Camera>();
+            
+            GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera/CM vcam1")
+                    .GetComponent<CinemachineVirtualCamera>()
+                    .enabled = false;
+            
+            tpvBodyFollowerT = tagger.bodyCollider.gameObject.transform;
 
 
             thirdPersonCamera = thirdPersonCameraGo.GetComponent<UnityEngine.Camera>();
 
-            cameraTablet.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-            cameraFollower =
-                GameObject.Find(
-                    "Player Objects/Player VR Controller/GorillaPlayer/TurnParent/Main Camera/Camera Follower");
+            cameraTabletT.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+            cameraFollowerT =
+                GameObject.Find("Player Objects/Player VR Controller/GorillaPlayer/TurnParent/Main Camera/Camera Follower")
+                        .transform;
 
 
             tabletCameraGo = GameObject.Find("CameraTablet(Clone)/Camera");
@@ -168,13 +169,12 @@ namespace CameraMod.Camera {
             
             RegisterButtons();
             
-            cmVirtualCamera.enabled = false;
-            thirdPersonCameraGo.transform.SetParent(cameraTablet.transform, true);
-            cameraTablet.transform.position = new Vector3(-65, 12, -82);
+            thirdPersonCameraGo.transform.SetParent(cameraTabletT, true);
+            cameraTabletT.position = new Vector3(-65, 12, -82);
             var tabletT = tabletCamera.transform;
             thirdPersonCameraGo.transform.position = tabletT.position;
             thirdPersonCameraGo.transform.rotation = tabletT.rotation;
-            cameraTablet.transform.Rotate(0, 180, 0);
+            cameraTabletT.Rotate(0, 180, 0);
 
             colorScreenText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/ColorScreenText")
                 .GetComponent<Text>();
@@ -282,7 +282,8 @@ namespace CameraMod.Camera {
             });
             
             AddTabletButton("MainPage/FPButton", () => fp = !fp);
-            
+
+            var openedurl = false;
             AddTabletButton("MainPage/ControlsButton", () => {
                 if (!openedurl) {
                     Application.OpenURL("https://github.com/Yizzii/YizziCamModV2#controls");
@@ -389,8 +390,8 @@ namespace CameraMod.Camera {
                     SetTabletVisibility(false);
                     mainPage.GO.active = false;
                 }
-                var camera = cameraTablet.transform;
-                var follower = cameraFollower.transform;
+                var camera = cameraTabletT;
+                var follower = cameraFollowerT;
                 
                 
                 camera.position = follower.position;
@@ -402,7 +403,7 @@ namespace CameraMod.Camera {
                 camera.rotation = newRotation;
             }
 
-            if (BindEnabled && Binds.Tablet() && cameraTablet.transform.parent == null) {
+            if (BindEnabled && Binds.Tablet() && cameraTabletT.parent == null) {
                 fp = false;
                 fpv = false;
                 tpv = false;
@@ -415,21 +416,23 @@ namespace CameraMod.Camera {
 
                 var headTransform = Player.Instance.headCollider.transform;
                 var headPos = headTransform.position;
-                cameraTablet.transform.position = headPos + headTransform.forward;
-                cameraTablet.transform.LookAt(headPos);
-                cameraTablet.transform.Rotate(0f, -180f, 0f);
+                cameraTabletT.position = headPos + headTransform.forward;
+                cameraTabletT.LookAt(headPos);
+                cameraTabletT.Rotate(0f, -180f, 0f);
             }
 
             if (fp) {
-                cameraTablet.transform.LookAt(2f * cameraTablet.transform.position - cameraFollower.transform.position);
+                cameraTabletT.LookAt(2f * cameraTabletT.position - cameraFollowerT.position);
                 if (!isFaceCamera) {
                     Flip();
                 }
 
-                dist = Vector3.Distance(cameraFollower.transform.position, cameraTablet.transform.position);
+                var dist = Vector3.Distance(cameraFollowerT.position, cameraTabletT.position);
                 if (dist > minDist)
-                    cameraTablet.transform.position = Vector3.Lerp(cameraTablet.transform.position,
-                        cameraFollower.transform.position, fpspeed);
+                    cameraTabletT.position = Vector3.Lerp(
+                        cameraTabletT.position,
+                        cameraFollowerT.position, 
+                        fpspeed);
             }
 
             if (tpv) {
@@ -438,26 +441,26 @@ namespace CameraMod.Camera {
                     mainPage.GO.active = false;
                 }
                 
+                Vector3 targetPosition;
                 switch (tpvMode) {
                     case TpvModes.Back: {
                         if (followheadrot)
-                            targetPosition = cameraFollower.transform.TransformPoint(new Vector3(0.3f, 0.1f, -1.5f));
+                            targetPosition = cameraFollowerT.TransformPoint(new Vector3(0.3f, 0.1f, -1.5f));
                         else
-                            targetPosition = tpvBodyFollower.transform.TransformPoint(new Vector3(0.3f, 0.1f, -1.5f));
-                        cameraTablet.transform.position = Vector3.SmoothDamp(cameraTablet.transform.position,
+                            targetPosition = tpvBodyFollowerT.TransformPoint(new Vector3(0.3f, 0.1f, -1.5f));
+                        cameraTabletT.position = Vector3.SmoothDamp(cameraTabletT.position,
                             targetPosition, ref velocity, 0.1f);
-                        cameraTablet.transform.LookAt(cameraFollower.transform.position);
+                        cameraTabletT.LookAt(cameraFollowerT.position);
                         break;
                     }
                     case TpvModes.Front: {
                         if (followheadrot)
-                            targetPosition = cameraFollower.transform.TransformPoint(new Vector3(0.1f, 0.3f, 2.5f));
+                            targetPosition = cameraFollowerT.TransformPoint(new Vector3(0.1f, 0.3f, 2.5f));
                         else
-                            targetPosition = tpvBodyFollower.transform.TransformPoint(new Vector3(0.1f, 0.3f, 2.5f));
-                        cameraTablet.transform.position = Vector3.SmoothDamp(cameraTablet.transform.position,
+                            targetPosition = tpvBodyFollowerT.TransformPoint(new Vector3(0.1f, 0.3f, 2.5f));
+                        cameraTabletT.position = Vector3.SmoothDamp(cameraTabletT.position,
                             targetPosition, ref velocity, 0.1f);
-                        cameraTablet.transform.LookAt(2f * cameraTablet.transform.position -
-                                                      cameraFollower.transform.position);
+                        cameraTabletT.LookAt(2f * cameraTabletT.position - cameraFollowerT.position);
                         break;
                     }
                 }
@@ -465,12 +468,12 @@ namespace CameraMod.Camera {
                 if (Binds.Tablet()) {
                     var headT = Player.Instance.headCollider.transform;
                     
-                    cameraTablet.transform.position = headT.position + headT.forward;
-                    cameraTablet.transform.LookAt(headT.position);
-                    cameraTablet.transform.Rotate(0f, -180f, 0f);
+                    cameraTabletT.position = headT.position + headT.forward;
+                    cameraTabletT.LookAt(headT.position);
+                    cameraTabletT.Rotate(0f, -180f, 0f);
                     
                     SetTabletVisibility(true);
-                    cameraTablet.transform.parent = null;
+                    cameraTabletT.parent = null;
                     tpv = false;
                 }
             }

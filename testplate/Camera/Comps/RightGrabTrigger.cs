@@ -5,7 +5,7 @@ namespace CameraMod.Camera.Comps {
     internal class RightGrabTrigger : MonoBehaviour {
         private Transform rightHandT => GorillaTagger.Instance.rightHandTransform;
         private CameraController controller => CameraController.Instance;
-        private Transform tabletT => controller.cameraTablet.transform;
+        private Transform tabletT => controller.cameraTabletT;
         
         private void Start() {
             gameObject.layer = 18;

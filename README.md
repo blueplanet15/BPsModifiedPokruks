@@ -6,6 +6,8 @@
 * Adjustable camera activation bind.
 * You can adjust camera bind settings at runtime, no need to restart the game.
 * Spectating other players
+* You can now switch spec mode to first person through the gui as well
+* First person roll lock
 
 ## Controls
 * Press your camera activation bind to spawn the camera in front of you (see the controls config guide below).

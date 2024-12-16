@@ -1,22 +1,23 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CameraMod.Camera.Pages {
     public class MainPage {
         public GameObject GO;
 
-        public Text FOVText;
-        public Text SmoothText;
-        public Text NearClipText;
+        public TextMeshPro FOVText;
+        public TextMeshPro SmoothText;
+        public TextMeshPro NearClipText;
         
         public MainPage(GameObject rootObject) {
             GO = rootObject;
             
             var rootT = rootObject.transform;
             
-            FOVText = rootT.Find("Canvas/FovValueText").GetComponent<Text>();
-            SmoothText = rootT.Find("Canvas/SmoothingValueText").GetComponent<Text>();
-            NearClipText = rootT.Find("Canvas/NearClipValueText").GetComponent<Text>();
+            FOVText = rootT.Find("Canvas/FovValueText").GetComponent<TextMeshPro>();
+            SmoothText = rootT.Find("Canvas/SmoothingValueText").GetComponent<TextMeshPro>();
+            NearClipText = rootT.Find("Canvas/NearClipValueText").GetComponent<TextMeshPro>();
         }
     }
 }

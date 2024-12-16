@@ -3,6 +3,8 @@
 ## Main Exclusive Features
 * No camera delay, no more laggy cosmetics **glitching** on the camera.
 * Settings save: smoothing, camera clipping, FOV — all that **automatically saves**, so you don't need to set it up every time you restart the game.
+* Toggleable Head Cosmetics Hide feature for first person view camera
+* Toggleable Roll Lock feature
 * Adjustable camera activation bind.
 * You can adjust camera bind settings at runtime, no need to restart the game.
 * Spectating other players

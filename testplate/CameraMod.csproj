@@ -12,7 +12,8 @@
     </ItemGroup>
     <ItemGroup>
         <EmbeddedResource Include="Camera\Assets\colorscreen"/>
-        <EmbeddedResource Include="Camera\Assets\yizzicam"/>
+        <None Remove="Camera\Assets\pokrukcam" />
+        <EmbeddedResource Include="Camera\Assets\pokrukcam" />
     </ItemGroup>
     <ItemGroup>
 

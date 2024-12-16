@@ -7,6 +7,7 @@ using CameraMod.Camera.Comps;
 using CameraMod.Camera.Pages;
 using Cinemachine;
 using GorillaLocomotion;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,8 +51,6 @@ namespace CameraMod.Camera {
 
         public UnityEngine.Camera tabletCamera;
         public UnityEngine.Camera thirdPersonCamera;
-
-        public Text colorScreenText;
 
         public bool followheadrot = true;
         public bool isFaceCamera;
@@ -139,7 +138,7 @@ namespace CameraMod.Camera {
             var assetsPath = Assembly.GetExecutingAssembly().GetName().Name + ".Camera.Assets";
             Debug.Log(assetsPath);
             colorScreenGo = LoadBundle("ColorScreen", assetsPath + ".colorscreen");
-            cameraTabletT = LoadBundle("CameraTablet", assetsPath + ".yizzicam").transform;
+            cameraTabletT = LoadBundle("CameraTablet", assetsPath + ".pokrukcam").transform;
 
             thirdPersonCameraGo = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera");
             
@@ -176,8 +175,6 @@ namespace CameraMod.Camera {
             thirdPersonCameraGo.transform.rotation = tabletT.rotation;
             cameraTabletT.Rotate(0, 180, 0);
 
-            colorScreenText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/ColorScreenText")
-                .GetComponent<Text>();
             
             
             void SetColor(Color color) {
@@ -240,6 +237,8 @@ namespace CameraMod.Camera {
 
         private float lastPageChangedTime;
         private readonly float pageChangeButtonsTimeout = 0.2f;
+        public HeadCosmeticsHider HeadCosmeticsHider;
+
         public bool ButtonsTimeouted => Time.time - lastPageChangedTime < pageChangeButtonsTimeout;
 
         public void EnableFPV() {
@@ -283,13 +282,19 @@ namespace CameraMod.Camera {
             
             AddTabletButton("MainPage/FPButton", () => fp = !fp);
 
-            var openedurl = false;
-            AddTabletButton("MainPage/ControlsButton", () => {
-                if (!openedurl) {
-                    Application.OpenURL("https://github.com/Yizzii/YizziCamModV2#controls");
-                    openedurl = true;
-                }
+            HeadCosmeticsHider = thirdPersonCameraGo.AddComponent<HeadCosmeticsHider>();
+            HeadCosmeticsHider.enabled = PlayerPrefs.GetInt("HeadCosmeticsHide", 0) == 1;
+            AddTabletButton("MainPage/HideHeadCosmetics", () => {
+                HeadCosmeticsHider.enabled = !HeadCosmeticsHider.enabled;
+                PlayerPrefs.SetInt("HeadCosmeticsHide", HeadCosmeticsHider.enabled ? 1 : 0);
             });
+            
+            RollLock = PlayerPrefs.GetInt("RollLock", 1) == 1;
+            AddTabletButton("MainPage/RollLock", () => {
+                RollLock = !RollLock;
+                PlayerPrefs.SetInt("RollLock", RollLock ? 1 : 0);
+            });
+            
             AddTabletButton("MainPage/TPVButton", () => {
                 if (tpvMode == TpvModes.Back) {
                     if (isFaceCamera) {
@@ -348,13 +353,15 @@ namespace CameraMod.Camera {
                 followheadrot = !followheadrot;
                 miscPage.TpRotText.text = followheadrot.ToString().ToUpper();
             });
-            
-            AddTabletButton("MiscPage/GreenScreenButton", () => {
+
+            var greenScreenButtonGO = GameObject.Find("CameraTablet(Clone)/MiscPage/GreenScreenButton");
+            var colorScreenText = greenScreenButtonGO.transform.Find("Text").GetComponent<TextMeshPro>();
+            AddTabletButton(greenScreenButtonGO, () => {
                 colorScreenGo.active = !colorScreenGo.active;
                 if (colorScreenGo.active)
-                    colorScreenText.text = "(ENABLED)";
+                    colorScreenText.text = "GREEN SCREEN\n(ENABLED)";
                 else
-                    colorScreenText.text = "(DISABLED)";
+                    colorScreenText.text = "GREEN SCREEN\n(DISABLED)";
             });
         }
 
@@ -364,7 +371,11 @@ namespace CameraMod.Camera {
             button.OnClick(onClick);
             return button;
         }
-
+        public void AddTabletButton(GameObject go, Action onClick) {
+            var button = go.AddComponent<ClickButton>();
+            button.OnClick(onClick);
+            buttons.Add(button);
+        }
         public void AddTabletButton(string relativeButtonPath, Action onClick) {
             buttons.Add(Button("CameraTablet(Clone)/" + relativeButtonPath, onClick));
         }
@@ -381,7 +392,7 @@ namespace CameraMod.Camera {
             tabletCamera.enabled = visible;
         }
         
-        public static bool NoTiltMode = true;
+        public static bool RollLock = true;
         public void AnUpdate() {
             if (!init) return;
 
@@ -397,7 +408,7 @@ namespace CameraMod.Camera {
                 camera.position = follower.position;
                 
                 var newRotation = camera.rotation.Lerped(follower.rotation, smoothing);
-                if (NoTiltMode) {
+                if (RollLock) {
                     newRotation = newRotation.eulerAngles.Scaled(new Vector3(1,1,0)).ToQuaternion();
                 }
                 camera.rotation = newRotation;

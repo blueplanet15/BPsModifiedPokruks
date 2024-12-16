@@ -10,10 +10,8 @@ namespace CameraMod.Camera.Pages {
         public TextMeshPro SmoothText;
         public TextMeshPro NearClipText;
         
-        public MainPage(GameObject rootObject) {
-            GO = rootObject;
-            
-            var rootT = rootObject.transform;
+        public MainPage(Transform rootT) {
+            GO = rootT.gameObject;
             
             FOVText = rootT.Find("Canvas/FovValueText").GetComponent<TextMeshPro>();
             SmoothText = rootT.Find("Canvas/SmoothingValueText").GetComponent<TextMeshPro>();

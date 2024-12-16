@@ -126,9 +126,9 @@ namespace CameraMod.Camera.Comps {
                         
                         if (!CameraController.Instance.isFaceCamera) {
                             CameraController.Instance.isFaceCamera = true;
-                            CameraController.Instance.thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-                            CameraController.Instance.tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-                            CameraController.Instance.fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+                            CameraController.Instance.thirdPersonCameraT.Rotate(0.0f, 180f, 0.0f);
+                            CameraController.Instance.tabletCameraT.Rotate(0.0f, 180f, 0.0f);
+                            CameraController.Instance.fakeWebCamT.Rotate(-180f, 180f, 0.0f);
                         }
 
                         SpecMode();

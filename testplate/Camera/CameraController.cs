@@ -36,16 +36,15 @@ namespace CameraMod.Camera {
         public Transform cameraFollowerT;
         public Transform tpvBodyFollowerT;
         
-        public GameObject thirdPersonCameraGo;
-        public GameObject fakeWebCam;
-        public GameObject tabletCameraGo;
+        public Transform thirdPersonCameraT;
+        public Transform fakeWebCamT;
+        public Transform tabletCameraT;
         
         public MainPage mainPage;
         public MiscPage miscPage;
         
         public GameObject colorScreenGo;
         private readonly List<BaseButton> buttons = new List<BaseButton>();
-        public List<BaseButton> colorButtons = new List<BaseButton>();
         public List<Material> screenMats = new List<Material>();
         public List<MeshRenderer> meshRenderers = new List<MeshRenderer>();
 
@@ -140,7 +139,7 @@ namespace CameraMod.Camera {
             colorScreenGo = LoadBundle("ColorScreen", assetsPath + ".colorscreen");
             cameraTabletT = LoadBundle("CameraTablet", assetsPath + ".pokrukcam").transform;
 
-            thirdPersonCameraGo = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera");
+            thirdPersonCameraT = GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera").transform;
             
             GameObject.Find("Player Objects/Third Person Camera/Shoulder Camera/CM vcam1")
                     .GetComponent<CinemachineVirtualCamera>()
@@ -149,7 +148,7 @@ namespace CameraMod.Camera {
             tpvBodyFollowerT = tagger.bodyCollider.gameObject.transform;
 
 
-            thirdPersonCamera = thirdPersonCameraGo.GetComponent<UnityEngine.Camera>();
+            thirdPersonCamera = thirdPersonCameraT.GetComponent<UnityEngine.Camera>();
 
             cameraTabletT.localScale = new Vector3(0.3f, 0.3f, 0.3f);
             cameraFollowerT =
@@ -157,22 +156,22 @@ namespace CameraMod.Camera {
                         .transform;
 
 
-            tabletCameraGo = GameObject.Find("CameraTablet(Clone)/Camera");
-            tabletCamera = tabletCameraGo.GetComponent<UnityEngine.Camera>();
-
-            fakeWebCam = GameObject.Find("CameraTablet(Clone)/FakeCamera");
-            GameObject.Find("CameraTablet(Clone)/LeftGrabCol").AddComponent<LeftGrabTrigger>();
-            GameObject.Find("CameraTablet(Clone)/RightGrabCol").AddComponent<RightGrabTrigger>();
-            mainPage = new MainPage(GameObject.Find("CameraTablet(Clone)/MainPage"));
-            miscPage = new MiscPage(GameObject.Find("CameraTablet(Clone)/MiscPage"));
+            tabletCameraT = cameraTabletT.Find("Camera");
+            tabletCamera = tabletCameraT.GetComponent<UnityEngine.Camera>();
+            
+            fakeWebCamT = cameraTabletT.Find("FakeCamera");
+            cameraTabletT.Find("LeftGrabCol").AddComponent<LeftGrabTrigger>();
+            cameraTabletT.Find("RightGrabCol").AddComponent<RightGrabTrigger>();
+            mainPage = new MainPage(cameraTabletT.Find("MainPage"));
+            miscPage = new MiscPage(cameraTabletT.Find("MiscPage"));
             
             RegisterButtons();
             
-            thirdPersonCameraGo.transform.SetParent(cameraTabletT, true);
+            thirdPersonCameraT.SetParent(cameraTabletT, true);
             cameraTabletT.position = new Vector3(-65, 12, -82);
             var tabletT = tabletCamera.transform;
-            thirdPersonCameraGo.transform.position = tabletT.position;
-            thirdPersonCameraGo.transform.rotation = tabletT.rotation;
+            thirdPersonCameraT.position = tabletT.position;
+            thirdPersonCameraT.rotation = tabletT.rotation;
             cameraTabletT.Rotate(0, 180, 0);
 
             
@@ -181,15 +180,10 @@ namespace CameraMod.Camera {
                 foreach (var mat in screenMats) mat.color = color;
             }
             
-            colorButtons.Add(Button("ColorScreen(Clone)/Stuff/RedButton", () => {
-                SetColor(Color.red);
-            }));
-            colorButtons.Add(Button("ColorScreen(Clone)/Stuff/GreenButton", () => {
-                SetColor(Color.green);
-            }));
-            colorButtons.Add(Button("ColorScreen(Clone)/Stuff/BlueButton", () => {
-                SetColor(Color.blue);
-            }));
+            var colorButtonsT = GameObject.Find("ColorScreen(Clone)/Stuff").transform;
+            Button(colorButtonsT.Find("RedButton"), () => SetColor(Color.red));
+            Button(colorButtonsT.Find("GreenButton"), () => SetColor(Color.green));
+            Button(colorButtonsT.Find("BlueButton"), () => SetColor(Color.blue));
             
             new [] {
                 "ColorScreen(Clone)/Screen1",
@@ -202,13 +196,8 @@ namespace CameraMod.Camera {
                     .material)
             );
 
-            new[] {
-                "CameraTablet(Clone)/FakeCamera",
-                "CameraTablet(Clone)/Tablet",
-                "CameraTablet(Clone)/Handle",
-                "CameraTablet(Clone)/Handle2"
-            }.ForEach(meshPath => {
-                meshRenderers.Add(GameObject.Find(meshPath).GetComponent<MeshRenderer>());
+            new[] { "FakeCamera", "Tablet", "Handle", "Handle2" }.ForEach(meshPath => {
+                meshRenderers.Add(cameraTabletT.Find(meshPath).GetComponent<MeshRenderer>());
             });
 
             colorScreenGo.transform.position = new Vector3(-54.3f, 16.21f, -122.96f);
@@ -217,7 +206,7 @@ namespace CameraMod.Camera {
             miscPage.GO.SetActive(false);
             thirdPersonCamera.nearClipPlane = 0.1f;
             tabletCamera.nearClipPlane = 0.1f;
-            fakeWebCam.transform.Rotate(-180, 180, 0);
+            fakeWebCamT.Rotate(-180, 180, 0);
             init = true;
             
             var fov = PlayerPrefs.GetInt("CameraFov", 100);
@@ -230,9 +219,9 @@ namespace CameraMod.Camera {
         
         public void Flip() {
             isFaceCamera = !isFaceCamera;
-            thirdPersonCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-            tabletCameraGo.transform.Rotate(0.0f, 180f, 0.0f);
-            fakeWebCam.transform.Rotate(-180f, 180f, 0.0f);
+            thirdPersonCameraT.Rotate(0.0f, 180f, 0.0f);
+            tabletCameraT.Rotate(0.0f, 180f, 0.0f);
+            fakeWebCamT.Rotate(-180f, 180f, 0.0f);
         }
 
         private float lastPageChangedTime;
@@ -252,14 +241,15 @@ namespace CameraMod.Camera {
         }
         
         public void RegisterButtons() {
-            AddTabletButton("MainPage/MiscButton", () => {
-                mainPage.GO.SetActive(false);
-                miscPage.GO.SetActive(true);
-                lastPageChangedTime = Time.time;
-            });
             AddTabletButton("MiscPage/BackButton", () => {
                 mainPage.GO.SetActive(true);
                 miscPage.GO.SetActive(false);
+                lastPageChangedTime = Time.time;
+            });
+            
+            AddTabletButton("MainPage/MiscButton", () => {
+                mainPage.GO.SetActive(false);
+                miscPage.GO.SetActive(true);
                 lastPageChangedTime = Time.time;
             });
             
@@ -282,7 +272,7 @@ namespace CameraMod.Camera {
             
             AddTabletButton("MainPage/FPButton", () => fp = !fp);
 
-            HeadCosmeticsHider = thirdPersonCameraGo.AddComponent<HeadCosmeticsHider>();
+            HeadCosmeticsHider = thirdPersonCameraT.AddComponent<HeadCosmeticsHider>();
             HeadCosmeticsHider.enabled = PlayerPrefs.GetInt("HeadCosmeticsHide", 0) == 1;
             AddTabletButton("MainPage/HideHeadCosmetics", () => {
                 HeadCosmeticsHider.enabled = !HeadCosmeticsHider.enabled;
@@ -354,9 +344,9 @@ namespace CameraMod.Camera {
                 miscPage.TpRotText.text = followheadrot.ToString().ToUpper();
             });
 
-            var greenScreenButtonGO = GameObject.Find("CameraTablet(Clone)/MiscPage/GreenScreenButton");
-            var colorScreenText = greenScreenButtonGO.transform.Find("Text").GetComponent<TextMeshPro>();
-            AddTabletButton(greenScreenButtonGO, () => {
+            var greenScreenButtonT = cameraTabletT.Find("MiscPage/GreenScreenButton");
+            var colorScreenText = greenScreenButtonT.transform.Find("Text").GetComponent<TextMeshPro>();
+            AddTabletButton(greenScreenButtonT, () => {
                 colorScreenGo.active = !colorScreenGo.active;
                 if (colorScreenGo.active)
                     colorScreenText.text = "GREEN SCREEN\n(ENABLED)";
@@ -366,22 +356,29 @@ namespace CameraMod.Camera {
         }
 
         public ClickButton Button(string buttonPath, Action onClick) {
-            var button = GameObject.Find(buttonPath)
-                .AddComponent<ClickButton>();
+            return Button(GameObject.Find(buttonPath), onClick);
+        }
+        public ClickButton Button(GameObject go, Action onClick) {
+            var button = go.AddComponent<ClickButton>();
             button.OnClick(onClick);
             return button;
         }
-        public void AddTabletButton(GameObject go, Action onClick) {
-            var button = go.AddComponent<ClickButton>();
+        public ClickButton Button(Transform t, Action onClick) {
+            var button = t.AddComponent<ClickButton>();
+            button.OnClick(onClick);
+            return button;
+        }
+        
+        public void AddTabletButton(Transform t, Action onClick) {
+            var button = t.AddComponent<ClickButton>();
             button.OnClick(onClick);
             buttons.Add(button);
         }
         public void AddTabletButton(string relativeButtonPath, Action onClick) {
-            buttons.Add(Button("CameraTablet(Clone)/" + relativeButtonPath, onClick));
+            buttons.Add(Button(cameraTabletT.Find(relativeButtonPath), onClick));
         }
         public void AddHoldableTabletButton(string buttonPath, Action onClick) {
-            buttons.Add(
-                GameObject.Find("CameraTablet(Clone)/"+buttonPath)
+            buttons.Add(cameraTabletT.Find(buttonPath)
                     .AddComponent<HoldableButton>()
                     .OnClick(onClick)
             );

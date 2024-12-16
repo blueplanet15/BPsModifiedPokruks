@@ -11,13 +11,13 @@ namespace CameraMod.Camera.Pages {
         public TextMeshPro TpText;
         public TextMeshPro TpRotText;
         
-        public MiscPage(GameObject GO) {
-            this.GO = GO;
+        public MiscPage(Transform t) {
+            GO = t.gameObject;
             
-            MinDistText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/MinDistValueText").GetComponent<TextMeshPro>();
-            SpeedText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/SpeedValueText").GetComponent<TextMeshPro>();
-            TpText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/TPText").GetComponent<TextMeshPro>();
-            TpRotText = GameObject.Find("CameraTablet(Clone)/MiscPage/Canvas/TPRotText").GetComponent<TextMeshPro>();
+            MinDistText = t.Find("Canvas/MinDistValueText").GetComponent<TextMeshPro>();
+            SpeedText = t.Find("Canvas/SpeedValueText").GetComponent<TextMeshPro>();
+            TpText = t.Find("Canvas/TPText").GetComponent<TextMeshPro>();
+            TpRotText = t.Find("Canvas/TPRotText").GetComponent<TextMeshPro>();
         }
     }
 }

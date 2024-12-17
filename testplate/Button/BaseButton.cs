@@ -17,7 +17,7 @@ namespace CameraMod.Button {
             GorillaTagger.Instance.StartVibration(isLeftHand, GorillaTagger.Instance.tagHapticStrength / 2f, GorillaTagger.Instance.tagHapticDuration / 4f);
         }
         
-        private void Start() {
+        protected virtual void Start() {
             gameObject.layer = 18;
         }
     }

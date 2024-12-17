@@ -8,9 +8,6 @@
     </PropertyGroup>
     <ItemGroup>
         <None Remove="Camera\Assets\colorscreen"/>
-        <None Remove="Camera\Assets\yizzicam"/>
-    </ItemGroup>
-    <ItemGroup>
         <EmbeddedResource Include="Camera\Assets\colorscreen"/>
         <None Remove="Camera\Assets\pokrukcam" />
         <EmbeddedResource Include="Camera\Assets\pokrukcam" />

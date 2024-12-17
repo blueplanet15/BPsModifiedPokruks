@@ -135,7 +135,6 @@ namespace CameraMod.Camera {
             
             gameObject.AddComponent<InputManager>().gameObject.AddComponent<UI>();
             var assetsPath = Assembly.GetExecutingAssembly().GetName().Name + ".Camera.Assets";
-            Debug.Log(assetsPath);
             colorScreenGo = LoadBundle("ColorScreen", assetsPath + ".colorscreen");
             cameraTabletT = LoadBundle("CameraTablet", assetsPath + ".pokrukcam").transform;
 
@@ -179,19 +178,18 @@ namespace CameraMod.Camera {
             void SetColor(Color color) {
                 foreach (var mat in screenMats) mat.color = color;
             }
-            
-            var colorButtonsT = GameObject.Find("ColorScreen(Clone)/Stuff").transform;
+            var colorButtonsT = colorScreenGo.transform.Find("Stuff").transform;
             Button(colorButtonsT.Find("RedButton"), () => SetColor(Color.red));
             Button(colorButtonsT.Find("GreenButton"), () => SetColor(Color.green));
             Button(colorButtonsT.Find("BlueButton"), () => SetColor(Color.blue));
             
             new [] {
-                "ColorScreen(Clone)/Screen1",
-                "ColorScreen(Clone)/Screen2",
-                "ColorScreen(Clone)/Screen3"
-            }.ForEach(screenMatPath=>
+                "Screen1",
+                "Screen2",
+                "Screen3"
+            }.ForEach(screenName=>
                 screenMats.Add(
-                    GameObject.Find(screenMatPath)
+                    colorScreenGo.transform.Find(screenName)
                     .GetComponent<MeshRenderer>()
                     .material)
             );
@@ -271,19 +269,12 @@ namespace CameraMod.Camera {
             });
             
             AddTabletButton("MainPage/FPButton", () => fp = !fp);
-
-            HeadCosmeticsHider = thirdPersonCameraT.AddComponent<HeadCosmeticsHider>();
-            HeadCosmeticsHider.enabled = PlayerPrefs.GetInt("HeadCosmeticsHide", 0) == 1;
-            AddTabletButton("MainPage/HideHeadCosmetics", () => {
-                HeadCosmeticsHider.enabled = !HeadCosmeticsHider.enabled;
-                PlayerPrefs.SetInt("HeadCosmeticsHide", HeadCosmeticsHider.enabled ? 1 : 0);
-            });
             
-            RollLock = PlayerPrefs.GetInt("RollLock", 1) == 1;
-            AddTabletButton("MainPage/RollLock", () => {
-                RollLock = !RollLock;
-                PlayerPrefs.SetInt("RollLock", RollLock ? 1 : 0);
-            });
+            HeadCosmeticsHider = thirdPersonCameraT.AddComponent<HeadCosmeticsHider>();
+            buttons.Add(cameraTabletT.Find("MainPage/HideHeadCosmetics").AddComponent<ToggleButton>()
+                    .InitToggleButton(setter: b => HeadCosmeticsHider.enabled = b, getter: () => HeadCosmeticsHider.enabled));
+            buttons.Add(cameraTabletT.Find("MainPage/RollLock").AddComponent<ToggleButton>()
+                    .InitToggleButton(setter: b => RollLock = b, getter: () => RollLock));
             
             AddTabletButton("MainPage/TPVButton", () => {
                 if (tpvMode == TpvModes.Back) {
@@ -343,26 +334,11 @@ namespace CameraMod.Camera {
                 followheadrot = !followheadrot;
                 miscPage.TpRotText.text = followheadrot.ToString().ToUpper();
             });
-
-            var greenScreenButtonT = cameraTabletT.Find("MiscPage/GreenScreenButton");
-            var colorScreenText = greenScreenButtonT.transform.Find("Text").GetComponent<TextMeshPro>();
-            AddTabletButton(greenScreenButtonT, () => {
-                colorScreenGo.active = !colorScreenGo.active;
-                if (colorScreenGo.active)
-                    colorScreenText.text = "GREEN SCREEN\n(ENABLED)";
-                else
-                    colorScreenText.text = "GREEN SCREEN\n(DISABLED)";
-            });
+            
+            buttons.Add(cameraTabletT.Find("MiscPage/GreenScreenButton").AddComponent<ToggleButton>()
+                    .InitToggleButton(setter: b => colorScreenGo.active = b, getter: () => colorScreenGo.active));
         }
 
-        public ClickButton Button(string buttonPath, Action onClick) {
-            return Button(GameObject.Find(buttonPath), onClick);
-        }
-        public ClickButton Button(GameObject go, Action onClick) {
-            var button = go.AddComponent<ClickButton>();
-            button.OnClick(onClick);
-            return button;
-        }
         public ClickButton Button(Transform t, Action onClick) {
             var button = t.AddComponent<ClickButton>();
             button.OnClick(onClick);

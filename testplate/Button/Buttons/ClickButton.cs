@@ -18,6 +18,8 @@ namespace CameraMod.Button.Buttons {
             if (Time.time - lastClicked > clickMinInterval) {
                 Vibration(isLeft(col));
                 onClick?.Invoke();
+
+                lastClicked = Time.time;
             }
         }
     }

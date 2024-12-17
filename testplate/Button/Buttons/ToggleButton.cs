@@ -70,6 +70,8 @@ namespace CameraMod.Button.Buttons {
                 Vibration(isLeft(col));
                 IsDown = !IsDown;
                 onClick?.Invoke();
+
+                lastClicked = Time.time;
             }
         }
     }

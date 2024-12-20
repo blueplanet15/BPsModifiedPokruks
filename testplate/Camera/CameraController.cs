@@ -212,6 +212,10 @@ namespace CameraMod.Camera {
             
             var newSmoothing = PlayerPrefs.GetFloat("CameraSmoothing", 0.07f);
             SetSmoothing(newSmoothing);
+
+            var nearClipping = PlayerPrefs.GetFloat("CameraNearClip", tabletCamera.nearClipPlane);
+            SetNearClip(nearClipping);
+            
             Binds.Init();
         }
         

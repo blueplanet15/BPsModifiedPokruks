@@ -213,7 +213,7 @@ namespace CameraMod.Camera {
             var newSmoothing = PlayerPrefs.GetFloat("CameraSmoothing", 0.07f);
             SetSmoothing(newSmoothing);
 
-            var nearClipping = PlayerPrefs.GetFloat("CameraNearClip", tabletCamera.nearClipPlane);
+            var nearClipping = PlayerPrefs.GetFloat("CameraNearClip", 0.01f);
             SetNearClip(nearClipping);
             
             Binds.Init();
@@ -265,8 +265,8 @@ namespace CameraMod.Camera {
             AddTabletButton("MainPage/FovUP", () => ChangeFov(5));
             AddTabletButton("MainPage/FovDown", () => ChangeFov(-5));
             
-            AddTabletButton("MainPage/NearClipUp", () => ChangeNearClip(0.01f));
-            AddTabletButton("MainPage/NearClipDown", () => ChangeNearClip(-0.01f));
+            AddHoldableTabletButton("MainPage/NearClipUp", () => ChangeNearClip(0.01f));
+            AddHoldableTabletButton("MainPage/NearClipDown", () => ChangeNearClip(-0.01f));
             
             AddTabletButton("MainPage/FlipCamButton", () => {
                 Flip();

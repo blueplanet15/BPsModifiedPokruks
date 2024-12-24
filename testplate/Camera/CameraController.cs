@@ -368,7 +368,17 @@ namespace CameraMod.Camera {
             foreach (var mr in meshRenderers) mr.enabled = visible;
             tabletCamera.enabled = visible;
         }
-        
+
+        public string maxAngleInput = "30";
+        public float maxAngle = 30;
+        public void OnGUI() {
+            // maxAngleInput = GUI.TextField(new Rect(400, 400, 60, 30), maxAngleInput);
+            // if (GUI.Button(new Rect(400, 430, 60, 30), "Set Max Angle")) {
+            //     maxAngle = float.Parse(maxAngleInput);
+            // }
+        }
+
+        public static bool AngleClamping = true;
         public static bool RollLock = true;
         public void AnUpdate() {
             if (!init) return;
@@ -380,9 +390,11 @@ namespace CameraMod.Camera {
                 }
                 var camera = cameraTabletT;
                 var follower = cameraFollowerT;
-                
-                
+
                 camera.position = follower.position;
+                if (AngleClamping && Quaternion.Angle(camera.rotation, follower.rotation) > maxAngle) {
+                    camera.rotation = Quaternion.RotateTowards(follower.rotation, camera.rotation, maxAngle);
+                }
                 
                 var newRotation = camera.rotation.Lerped(follower.rotation, smoothing);
                 if (RollLock) {

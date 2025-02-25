@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using GorillaLocomotion;
+using GorillaNetworking;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -108,6 +109,8 @@ namespace CameraMod.Camera.Comps {
             CameraController.Instance.fp = false;
             CameraController.Instance.tpv = false;
         }
+
+        public string roomToJoin = "";
         
         public bool watermarkEnabled = false;
         private void OnGUI() {
@@ -116,7 +119,7 @@ namespace CameraMod.Camera.Comps {
             }
             
             if (uiopen) {
-                GUI.Box(new Rect(30f, 50f, 170f, 294f), "Pokruk's Camera Mod");
+                GUI.Box(new Rect(30f, 50f, 170f, 339f), "Pokruk's Camera Mod");
                 if (GUI.Button(new Rect(35f, 70f, 160f, 20f), freecam ? "FirstPersonView" : "FreeCam")) {
                     if (!freecam) {
                         if (spectating) {
@@ -170,6 +173,17 @@ namespace CameraMod.Camera.Comps {
                 
                 if (GUI.Button(new Rect(35f, 322f, 160f, 20f), "Copy UserID")) {
                     GUIUtility.systemCopyBuffer = PhotonNetwork.LocalPlayer.UserId;
+                }
+                
+                if (PhotonNetwork.InRoom) {
+                    if (GUI.Button(new Rect(35f, 349f, 160f, 40f), $"Leave {PhotonNetwork.CurrentRoom.Name}")) {
+                        PhotonNetwork.Disconnect();
+                    }
+                } else {
+                    roomToJoin = GUI.TextField(new Rect(35f, 349f, 160f, 20f), roomToJoin.Replace(@"\", ""));
+                    if (GUI.Button(new Rect(35f, 369f, 160f, 20f), "Join Room")) {
+                        PhotonNetworkController.Instance.AttemptToJoinSpecificRoom(roomToJoin, JoinType.Solo);
+                    }
                 }
                 
                 if (specui) {

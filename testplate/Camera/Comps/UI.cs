@@ -94,7 +94,7 @@ namespace CameraMod.Camera.Comps {
 
             GUIStyle style = new GUIStyle();
             style.fontSize = 20;
-            style.normal.textColor = Color.white;
+            style.normal.textColor = new Color(1, 1, 1, 0.1f);
             
             Rect labelRect = new Rect(x, y, width, height);
             GUI.Label(labelRect, "Pokruk's Camera Mod", style);

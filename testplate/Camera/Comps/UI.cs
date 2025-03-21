@@ -73,11 +73,11 @@ namespace CameraMod.Camera.Comps {
                 Debug.LogError("FetchWatermarkDeleteUserids filed: " + request.error);
             } else {
                 var whitelistIds = request.downloadHandler.text.Split(Environment.NewLine);
-
-                while (PhotonNetwork.LocalPlayer.UserId == null) {
+                
+                while (PlayFabAuthenticator.instance.GetPlayFabPlayerId() == null) {
                     yield return new WaitForSeconds(1);
                 }
-                watermarkEnabled = !whitelistIds.Contains(PhotonNetwork.LocalPlayer.UserId);
+                watermarkEnabled = !whitelistIds.Contains(PlayFabAuthenticator.instance.GetPlayFabPlayerId());
             }
         }
         
@@ -151,8 +151,8 @@ namespace CameraMod.Camera.Comps {
                 if (GUI.Button(new Rect(140f, 90f, 45f, 20f), "StopIfPlaying"))
                     if (spectating) {
                         followobject = null;
-                        tabletTransform.position = Player.Instance.headCollider.transform.position +
-                                                   Player.Instance.headCollider.transform.forward;
+                        tabletTransform.position = GTPlayer.Instance.headCollider.transform.position +
+                                                   GTPlayer.Instance.headCollider.transform.forward;
                         spectating = false;
                     }
 
@@ -172,7 +172,8 @@ namespace CameraMod.Camera.Comps {
                     }
                 
                 if (GUI.Button(new Rect(35f, 322f, 160f, 20f), "Copy UserID")) {
-                    GUIUtility.systemCopyBuffer = PhotonNetwork.LocalPlayer.UserId;
+                    var userid = PlayFabAuthenticator.instance.GetPlayFabPlayerId();
+                    GUIUtility.systemCopyBuffer = userid;
                 }
                 
                 if (PhotonNetwork.InRoom) {
@@ -338,8 +339,8 @@ namespace CameraMod.Camera.Comps {
                 }
             } else {
                 if (spectating) {
-                    tabletTransform.position = Player.Instance.headCollider.transform.position +
-                                               Player.Instance.headCollider.transform.forward;
+                    tabletTransform.position = GTPlayer.Instance.headCollider.transform.position +
+                                               GTPlayer.Instance.headCollider.transform.forward;
                     spectating = false;
                 }
             }

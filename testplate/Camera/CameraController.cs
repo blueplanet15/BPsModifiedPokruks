@@ -414,7 +414,7 @@ namespace CameraMod.Camera {
                     mainPage.GO.active = true;
                 }
 
-                var headTransform = Player.Instance.headCollider.transform;
+                var headTransform = GTPlayer.Instance.headCollider.transform;
                 var headPos = headTransform.position;
                 cameraTabletT.position = headPos + headTransform.forward;
                 cameraTabletT.LookAt(headPos);
@@ -466,7 +466,7 @@ namespace CameraMod.Camera {
                 }
 
                 if (Binds.Tablet()) {
-                    var headT = Player.Instance.headCollider.transform;
+                    var headT = GTPlayer.Instance.headCollider.transform;
                     
                     cameraTabletT.position = headT.position + headT.forward;
                     cameraTabletT.LookAt(headT.position);

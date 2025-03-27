@@ -1,5 +1,9 @@
 # Pokruk's Camera Mod
 
+## Check out [the mod showcase on TikTok](https://www.tiktok.com/@pokrukgt/video/7427872588166073608) <br />
+![Download (4)_5](https://github.com/user-attachments/assets/6e87dc89-a3bf-49af-80f7-8a9e3655374f)
+
+
 ## Main Exclusive Features
 * No camera delay, no more laggy cosmetics **glitching** on the camera.
 * Settings save: smoothing, camera clipping, FOV — all that **automatically saves**, so you don't need to set it up every time you restart the game.

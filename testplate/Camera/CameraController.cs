@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using CameraMod.Button;
@@ -232,6 +233,12 @@ namespace CameraMod.Camera {
 
         public bool ButtonsTimeouted => Time.time - lastPageChangedTime < pageChangeButtonsTimeout;
 
+        public void InitCosmeticsHider() {
+            HeadCosmeticsHider = thirdPersonCameraT.AddComponent<HeadCosmeticsHider>();
+            buttons.Add(cameraTabletT.Find("MainPage/HideHeadCosmetics").AddComponent<ToggleButton>()
+                    .InitToggleButton(setter: b => HeadCosmeticsHider.enabled = b, getter: () => HeadCosmeticsHider.enabled));
+        }
+        
         public void EnableFPV() {
             if (isFaceCamera) {
                 Flip();
@@ -274,9 +281,6 @@ namespace CameraMod.Camera {
             
             AddTabletButton("MainPage/FPButton", () => fp = !fp);
             
-            HeadCosmeticsHider = thirdPersonCameraT.AddComponent<HeadCosmeticsHider>();
-            buttons.Add(cameraTabletT.Find("MainPage/HideHeadCosmetics").AddComponent<ToggleButton>()
-                    .InitToggleButton(setter: b => HeadCosmeticsHider.enabled = b, getter: () => HeadCosmeticsHider.enabled));
             buttons.Add(cameraTabletT.Find("MainPage/RollLock").AddComponent<ToggleButton>()
                     .InitToggleButton(setter: b => RollLock = b, getter: () => RollLock));
             

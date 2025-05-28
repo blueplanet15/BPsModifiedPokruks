@@ -82,11 +82,11 @@ namespace CameraMod.Camera {
         public void SetNearClip(float val) {
             var tabletCam = tabletCamera;
             tabletCam.nearClipPlane = val;
-            if (tabletCam.nearClipPlane < 0.01) {
+            if (tabletCam.nearClipPlane < 0.01f) {
                 tabletCam.nearClipPlane = 1f;
                 thirdPersonCamera.nearClipPlane = 1f;
             }
-            if (tabletCam.nearClipPlane > 1.0) {
+            if (tabletCam.nearClipPlane > 1.0f) {
                 tabletCam.nearClipPlane = 0.01f;
                 thirdPersonCamera.nearClipPlane = 0.01f;
             }

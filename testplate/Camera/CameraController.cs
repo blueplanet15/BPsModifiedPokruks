@@ -233,7 +233,12 @@ namespace CameraMod.Camera {
 
         public bool ButtonsTimeouted => Time.time - lastPageChangedTime < pageChangeButtonsTimeout;
 
+        public bool isCosmeticsHiderInited = false;
         public void InitCosmeticsHider() {
+            if (isCosmeticsHiderInited) {
+                return;
+            }
+            isCosmeticsHiderInited = true;
             HeadCosmeticsHider = thirdPersonCameraT.AddComponent<HeadCosmeticsHider>();
             buttons.Add(cameraTabletT.Find("MainPage/HideHeadCosmetics").AddComponent<ToggleButton>()
                     .InitToggleButton(setter: b => HeadCosmeticsHider.enabled = b, getter: () => HeadCosmeticsHider.enabled));

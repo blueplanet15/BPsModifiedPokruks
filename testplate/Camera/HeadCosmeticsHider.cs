@@ -26,7 +26,7 @@ namespace CameraMod.Camera {
                 }
 
                 if (enable)
-                    cosmeticInstance.EnableItem(slotType);
+                    cosmeticInstance.EnableItem(slotType, VRRig.LocalRig);
                 else
                     cosmeticInstance.DisableItem(slotType);
             }

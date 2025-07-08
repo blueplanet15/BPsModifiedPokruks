@@ -62,43 +62,11 @@ namespace CameraMod.Camera.Comps {
             beachthing = GameObject.Find("Environment Objects/LocalObjects_Prefab/ForestToBeach");
             basement = GameObject.Find("Environment Objects/LocalObjects_Prefab/Basement");
             citybuildings = GameObject.Find("Environment Objects/LocalObjects_Prefab/City/CosmeticsRoomAnchor/rain");
-            
-            StartCoroutine(FetchWatermarkDeleteUserids());
-        }
-        
-        IEnumerator FetchWatermarkDeleteUserids() {
-            UnityWebRequest request = UnityWebRequest.Get("https://pastebin.com/raw/EHB6SJnz");
-            yield return request.SendWebRequest();
-            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError) {
-                Debug.LogError("FetchWatermarkDeleteUserids filed: " + request.error);
-            } else {
-                var whitelistIds = request.downloadHandler.text.Split(Environment.NewLine);
-                
-                while (PlayFabAuthenticator.instance.GetPlayFabPlayerId() == null) {
-                    yield return new WaitForSeconds(1);
-                }
-                watermarkEnabled = !whitelistIds.Contains(PlayFabAuthenticator.instance.GetPlayFabPlayerId());
-            }
         }
         
         private void LateUpdate() {
             Spec();
             Freecam();
-        }
-
-        private void WaterMark() {
-            float width = 200;
-            float height = 50;
-
-            float x = Screen.width - width - 10;
-            float y = Screen.height - height - 10;
-
-            GUIStyle style = new GUIStyle();
-            style.fontSize = 20;
-            style.normal.textColor = new Color(1, 1, 1, 0.1f);
-            
-            Rect labelRect = new Rect(x, y, width, height);
-            GUI.Label(labelRect, "Pokruk's Camera Mod", style);
         }
 
         public bool IsSpecMode() {
@@ -112,11 +80,7 @@ namespace CameraMod.Camera.Comps {
 
         public string roomToJoin = "";
         
-        public bool watermarkEnabled = false;
         private void OnGUI() {
-            if (watermarkEnabled) {
-                WaterMark();
-            }
             
             if (uiopen) {
                 GUI.Box(new Rect(30f, 50f, 170f, 339f), "Pokruk's Camera Mod");
